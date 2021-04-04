@@ -1,4 +1,4 @@
-# cata-res-help
+# catares-help
 
 ## Project setup
 ```
