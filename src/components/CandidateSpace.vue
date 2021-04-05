@@ -3,13 +3,16 @@
     <template v-if="displayTop">
       <b-button
         type="is-outlined is-dark"
-        icon-left="account-plus"
-        @click="init"
+        icon-left="animation"
+        @click="showCandidateListDialog"
         v-if="selectedProg && selectedYear"
-        >Add Candidate</b-button
+        >Load Candidate</b-button
       >
       <hr />
     </template>
+    <p class="content cand-info">
+      <span>{{ candidate }}</span>
+    </p>
     <div class="block">
       <b-button
         @click="$emit('show-top', true)"
@@ -190,6 +193,8 @@
 </template>
 
 <script>
+import CandidateListModalForm from './CandidateListModalForm.vue'
+
 export default {
   computed: {
     datasets() {
@@ -248,11 +253,12 @@ export default {
       },
       dataset: null,
       selectedCourses: [],
-      bypassGradeYear: ''
+      bypassGradeYear: '',
+      candidate: ''
     }
   },
   methods: {
-    init() {
+    initDb() {
       const dbEntryName = 'catares-' + this.selectedProg.toLowerCase()
       const parsedList = localStorage[dbEntryName] ? JSON.parse(localStorage[dbEntryName]).courseList : null
       if (parsedList) this.courseList = parsedList[this.selectedYear].data
@@ -314,6 +320,14 @@ export default {
           dataset.points += row.points
           dataset.gradePoints += row.gradePoints
         })
+
+        // save candidate space
+        if (localStorage['catares-results']) {
+          const results = JSON.parse(localStorage['catares-results'])
+          results[this.candidate] = this.data
+          localStorage['catares-results'] = JSON.stringify(results)
+        }
+
       } else {
         this.$buefy.toast.open({
           duration: 5000,
@@ -325,6 +339,34 @@ export default {
     },
     fmtNum(value) {
       return Number(Math.round(parseFloat(value) + 'e2') + 'e-2').toFixed(2)
+    },
+
+    showCandidateListDialog() {
+      this.$buefy.modal.open({
+        parent: this,
+        component: CandidateListModalForm,
+        hasModalCard: true,
+        events: {
+          'init-space': (val) => {
+            this.initSpace(val)
+          }
+        }
+      })
+    },
+    initSpace(cand) {
+      this.$buefy.toast.open({
+        duration: 5000,
+        type: 'is-success',
+        message:
+          `Candidate space loaded for ${cand}.`
+      })
+      this.initDb()
+
+      this.candidate = cand
+      if (localStorage['catares-results'] && cand) {
+        const results = JSON.parse(localStorage['catares-results'])[cand]
+        this.data = results ? results : []
+      }
     }
   }
 }
@@ -340,5 +382,14 @@ export default {
   margin-left: 10px;
   background: #ffbffb;
   box-shadow: 3px 3px #ca91d2;
+}
+
+.content.cand-info {
+  float: right;
+  margin-top: 20px;
+  position: absolute;
+  right: 45px;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 </style>
