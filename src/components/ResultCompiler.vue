@@ -128,9 +128,9 @@ export default {
         this.repos = JSON.parse(localStorage[entryName])
       } else {
         let courseList = this.repos.courseList[this.selectedYear]
-        courseList != undefined ? '' : this.repos.courseList[this.selectedYear] = { data: [] }
+        this.repos.courseList[this.selectedYear] = courseList != undefined ? courseList : { data: [] }
         let gradeList = this.gradeList[this.selectedYear]
-        gradeList != undefined ? '' : this.gradeList[this.selectedYear] = { data: [] }
+        this.gradeList[this.selectedYear] = gradeList != undefined ? gradeList : { data: [] }
       }
     },
     storeDb() {

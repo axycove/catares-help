@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-card">
+  <div class="modal-card" style="width: auto">
     <header class="modal-card-head">
       <p class="modal-card-title">Processed Candidate Listings in Repository</p>
     </header>
@@ -16,11 +16,7 @@
       </b-field>
       <b-tabs>
         <b-tab-item label="Table">
-          <b-table
-            :data="candidateList"
-            focusable
-            striped
-          >
+          <b-table :data="candidateList" focusable striped>
             <b-table-column field="id" label="ID" v-slot="props">{{
               props.row.id
             }}</b-table-column>
@@ -41,6 +37,12 @@
                 <b-field>
                   <b-button
                     type="is-danger is-rounded"
+                    icon-left="trash-can"
+                    style="margin-right: 5px"
+                    @click="deleteRow(row)"
+                  ></b-button>
+                  <b-button
+                    type="is-primary is-rounded"
                     icon-left="animation"
                     @click="initSpace(row.name)"
                     >Load</b-button
@@ -127,6 +129,24 @@ export default {
     initSpace(val) {
       this.$emit('init-space', val)
       this.$parent.close()
+    },
+    deleteRow(row) {
+      this.$buefy.dialog.confirm({
+        title: 'Deleting candidate',
+        message: `Are you sure you want to <b>delete</b> this candidate? This action cannot be undone.`,
+        confirmText: 'Delete Candidate',
+        type: 'is-danger',
+        hasIcon: true,
+        onConfirm: () => {
+          if (localStorage['catares-results']) {
+            const results = JSON.parse(localStorage['catares-results'])
+            delete results[row.name]
+            localStorage['catares-results'] = JSON.stringify(results)
+          }
+          this.$buefy.toast.open('Candidate delete!')
+        }
+      })
+
     }
   }
 }

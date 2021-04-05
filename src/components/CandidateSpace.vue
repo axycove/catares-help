@@ -380,7 +380,7 @@ export default {
   height: max-content;
   color: fuchsia;
   margin-left: 10px;
-  background: #ffbffb;
+  background: lavender;
   box-shadow: 3px 3px #ca91d2;
 }
 
