@@ -35,7 +35,7 @@
         <b-tab-item label="Entry">
           <b-field label="Code">
             <b-input
-              id="codeTextbox"
+              ref="codeTextbox"
               v-model="course.code"
               :title="course.code"
             ></b-input>
@@ -129,7 +129,7 @@ export default {
       let exists = false
 
       if (this.course.code === '' || this.course.title === '' || this.course.credits === '') {
-        document.getElementById('codeTextbox').focus()
+        this.$refs.codeTextbox.focus()
         return
       }
 
@@ -152,7 +152,7 @@ export default {
         title: '',
         credits: 0
       }
-      document.getElementById('codeTextbox').focus()
+      this.$refs.codeTextbox.focus()
 
       this.$emit('store-db')
     },

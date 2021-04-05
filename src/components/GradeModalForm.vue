@@ -35,7 +35,7 @@
         <b-tab-item label="Entry">
           <b-field label="Grade Letter">
             <b-input
-              id="gradeTextbox"
+              ref="gradeTextbox"
               v-model="grade.letter"
               :title="grade.letter"
             ></b-input>
@@ -121,7 +121,7 @@ export default {
       let exists = false
 
       if (this.grade.letter === '' || this.grade.points === '') {
-        document.getElementById('gradeTextbox').focus()
+        this.$refs.gradeTextbox.focus()
         return
       }
 
@@ -143,7 +143,7 @@ export default {
         letter: '',
         points: 0
       }
-      document.getElementById('gradeTextbox').focus()
+      this.$refs.gradeTextbox.focus()
 
       this.$emit('store-db') // this.$parent.$options.parent.storeDb()
     },

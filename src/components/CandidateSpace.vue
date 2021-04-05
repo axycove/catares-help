@@ -1,13 +1,25 @@
 <template>
   <section class="section" style="padding-top: 0">
-    <b-button
-      type="is-outlined is-dark"
-      icon-left="account-plus"
-      @click="init"
-      v-if="selectedProg && selectedYear"
-      >Add Candidate</b-button
-    >
-    <hr />
+    <template v-if="displayTop">
+      <b-button
+        type="is-outlined is-dark"
+        icon-left="account-plus"
+        @click="init"
+        v-if="selectedProg && selectedYear"
+        >Add Candidate</b-button
+      >
+      <hr />
+    </template>
+    <div class="block">
+      <b-button
+        @click="$emit('show-top', true)"
+        v-if="!displayTop"
+        icon-left="arrow-down"
+        type="is-primary is-rounded"
+        style="margin-top: 10px"
+        >Show Top</b-button
+      >
+    </div>
     <template v-if="courseList.length">
       <div class="columns">
         <div class="is-half" style="padding-left: 10px">
@@ -32,6 +44,19 @@
                 {{ option }}
               </option>
             </b-select>
+          </b-field>
+          <b-field label="Grade List Bypass">
+            <div class="block">
+              <b-radio
+                v-model="bypassGradeYear"
+                name="gradeYear"
+                :native-value="gy"
+                :key="gy"
+                v-for="gy in gradeYears"
+              >
+                {{ gy }}
+              </b-radio>
+            </div>
           </b-field>
           <b-button
             type="is-primary"
@@ -65,7 +90,7 @@
                 label="Description"
                 v-slot="props"
                 width="500"
-                >{{ props.row.description }}</b-table-column
+                ><b>{{ props.row.description }}</b></b-table-column
               >
               <b-table-column
                 centered
@@ -129,7 +154,7 @@
                       <b-button
                         icon-left="arrow-up"
                         @click="changeGrade(item)"
-                        type="is-success is-rounded"
+                        type="is-primary is-rounded"
                         size="is-small"
                       ></b-button>
                       <b-button
@@ -149,7 +174,7 @@
             </b-table>
           </b-field>
         </div>
-        <div class="content is-dark" style="margin: 15px">
+        <div class="content is-summary">
           <h6>SUMMARY</h6>
           <p>
             CTGP : <b>{{ totals.totalgradepoints }}</b>
@@ -185,6 +210,9 @@ export default {
         CGPA: totalgradepoints > 0 ? totalgradepoints / totalcredits : 0,
         totalcredits, totalgradepoints
       }
+    },
+    gradeYears() {
+      return Object.keys(this.gradeList)
     }
   },
   props: {
@@ -203,6 +231,10 @@ export default {
     sessions: {
       type: Array,
       required: true
+    },
+    displayTop: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -215,7 +247,8 @@ export default {
         credits: -1
       },
       dataset: null,
-      selectedCourses: []
+      selectedCourses: [],
+      bypassGradeYear: ''
     }
   },
   methods: {
@@ -223,6 +256,7 @@ export default {
       const dbEntryName = 'catares-' + this.selectedProg.toLowerCase()
       const parsedList = localStorage[dbEntryName] ? JSON.parse(localStorage[dbEntryName]).courseList : null
       if (parsedList) this.courseList = parsedList[this.selectedYear].data
+      this.$emit('show-top', false)
     },
     addToTable() {
       if (!this.dataset) return
@@ -257,7 +291,7 @@ export default {
       this.data.push(group)
     },
     changeGrade(obj, upwards = true) {
-      const gradeList = this.gradeList[this.dataset.split('_')[0]]
+      const gradeList = this.gradeList[this.bypassGradeYear ? this.bypassGradeYear : this.dataset.split('_')[0]]
       if (gradeList) {
         const grade = gradeList.data.find(item => item.letter == obj.grade)
         let position = gradeList.data.indexOf(grade)
@@ -273,7 +307,7 @@ export default {
         obj.gradePoints = newGrade.points * obj.credits
 
         // update totals
-        const dataset = this.data.find(d => d.description == this.dataset)
+        const dataset = this.data.find(d => d.description == obj.code.split('_').splice(-2, 2).join('_'))
         dataset.credits = dataset.points = dataset.gradePoints = 0
         dataset.items.forEach(row => {
           dataset.credits += row.credits
@@ -283,15 +317,28 @@ export default {
       } else {
         this.$buefy.toast.open({
           duration: 5000,
-          message: `You've not create a grades list for the year ${this.dataset.split('_')[0]}`,
+          message: `You've not created a grades list for the year ${this.dataset.split('_')[0]}, or bypass.`,
           position: 'is-bottom',
           type: 'is-danger'
         })
       }
     },
     fmtNum(value) {
-      return Number(Math.round(parseFloat(value) + 'e2') + 'e-2')
+      return Number(Math.round(parseFloat(value) + 'e2') + 'e-2').toFixed(2)
     }
   }
 }
 </script>
+<style scoped>
+.content.is-summary {
+  margin: 5px;
+  margin-left: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  height: max-content;
+  color: fuchsia;
+  margin-left: 10px;
+  background: #ffbffb;
+  box-shadow: 3px 3px #ca91d2;
+}
+</style>

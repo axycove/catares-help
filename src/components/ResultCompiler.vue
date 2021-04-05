@@ -6,7 +6,7 @@
         <p class="subtitle">An ad-hoc result compilation system!</p>
       </div>
     </section>
-    <section class="section">
+    <section class="section" v-show="displayTop">
       <b-field label="Dataset for this compilation" grouped>
         <b-select
           placeholder="Select a programme"
@@ -50,6 +50,8 @@
       :selectedYear="selectedYear"
       :sessions="sessions"
       :gradeList="gradeList"
+      @show-top="showTop"
+      :displayTop="displayTop"
     />
   </div>
 </template>
@@ -83,6 +85,7 @@ export default {
       ],
       selectedYear: 0,
       selectedProg: '',
+      displayTop: true,
     }
   },
   methods: {
@@ -136,6 +139,9 @@ export default {
       if (this.gradeList) {
         localStorage['catares-grades'] = JSON.stringify(this.gradeList)
       }
+    },
+    showTop(val) {
+      this.displayTop = val
     }
   },
   created() {
