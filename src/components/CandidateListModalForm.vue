@@ -107,20 +107,6 @@ export default {
   data() {
     return {
       checkedRows: [],
-      columns: [
-        {
-          field: 'id',
-          label: 'ID'
-        },
-        {
-          field: 'name',
-          label: 'Candidate\'s name',
-        },
-        {
-          field: 'datasets',
-          label: 'Active datasets'
-        },
-      ],
       candidate: ''
     }
 
