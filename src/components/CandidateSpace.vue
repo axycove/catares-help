@@ -25,13 +25,13 @@
     </div>
     <template v-if="courseList.length">
       <div class="columns">
-        <div class="column is-one-quarter" style="padding-left: 10px">
+        <div class="column" style="padding-left: 10px">
           <b-field grouped group-multiline>
             <b-select
               placeholder="Select course..."
               v-model="selectedCourses"
               multiple
-              native-size="14"
+              native-size="12"
             >
               <option
                 :value="option"
@@ -84,7 +84,7 @@
             </div>
           </b-field>
         </div>
-        <div class="column is-two-thirds" style="border-left: 1px solid #ccc">
+        <div style="border-left: 1px solid #ccc">
           <b-field>
             <b-table
               :data="data"
@@ -101,7 +101,7 @@
                 field="description"
                 label="Description"
                 v-slot="props"
-                width="800"
+                width="750"
                 ><b>{{ props.row.description }}</b></b-table-column
               >
               <b-table-column
@@ -136,7 +136,7 @@
                 <template v-slot:default="{ row }">
                   <b
                     >{{
-                      `GPA = ${
+                      `GPA: ${
                         row.gradePoints > 0
                           ? fmtNum(row.gradePoints / row.credits)
                           : 0
@@ -149,7 +149,7 @@
                 <tr
                   v-for="item in props.row.items"
                   :key="item.code"
-                  :class="item.grade > passGrade ? 'has-text-danger' : ''"
+                  :style="item.grade > passGrade ? 'color: fuchsia;' : ''"
                 >
                   <td></td>
                   <td>&nbsp;&nbsp;&nbsp;&nbsp;{{ item.description }}</td>
@@ -193,7 +193,7 @@
         </div>
         <div class="content is-summary">
           <p class="heading">SUMMARY</p>
-          <p>
+          <p class="detail">
             CTGP : <b>{{ totals.totalgradepoints }}</b>
             <br />
             CTUR : <b>{{ totals.totalcredits }}</b>
@@ -202,7 +202,7 @@
           </p>
           <template v-if="collatedCarryovers.length">
             <p class="heading">CARRY OVERS</p>
-            <p>{{ collatedCarryovers }}</p>
+            <p class="detail">{{ collatedCarryovers }}</p>
           </template>
         </div>
       </div>
@@ -422,6 +422,10 @@ export default {
 .is-summary .heading {
   font-weight: bold;
   font-size: .8rem;
+}
+
+.is-summary .detail {
+  color: fuchsia;
 }
 
 .content.cand-info {
