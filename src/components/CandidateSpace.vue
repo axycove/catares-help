@@ -74,6 +74,7 @@
             margin-left: 10px;
             padding-left: 10px;
             border-left: 1px solid #ccc;
+            width: 65%;
           "
         >
           <b-field>
@@ -159,13 +160,14 @@
                         @click="changeGrade(item)"
                         type="is-primary is-rounded"
                         size="is-small"
+                         style="display: table"
                       ></b-button>
                       <b-button
                         icon-left="arrow-down"
                         @click="changeGrade(item, false)"
                         type="is-danger is-rounded"
                         size="is-small"
-                        style="margin-left: 5px"
+                        style="margin-left: 5px; display: table"
                       ></b-button>
                     </b-field>
                   </td>
@@ -371,7 +373,7 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style>
 .content.is-summary {
   margin: 5px;
   margin-left: 5px;
@@ -391,5 +393,9 @@ export default {
   right: 45px;
   font-size: 1.2rem;
   font-weight: bold;
+}
+
+td .field.is-grouped {
+    justify-content: center !important;
 }
 </style>
