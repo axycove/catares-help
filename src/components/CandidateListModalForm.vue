@@ -22,17 +22,17 @@
             }}</b-table-column>
             <b-table-column
               field="name"
-              label="Candidate's Name"
+              label="Candidate's name"
               v-slot="props"
               >{{ props.row.name }}</b-table-column
             >
             <b-table-column
               field="datasets"
-              label="Active Datasets"
+              label="Active datasets"
               v-slot="props"
               >{{ props.row.datasets }}</b-table-column
             >
-            <b-table-column label="Actions">
+            <b-table-column>
               <template v-slot:default="{ row }">
                 <b-field>
                   <b-button
@@ -56,7 +56,7 @@
           </b-table>
         </b-tab-item>
         <b-tab-item label="Entry">
-          <b-field label="Candidate's Name">
+          <b-field label="Candidate's name">
             <b-input
               ref="candNameTextbox"
               v-model="candidate"
@@ -114,11 +114,11 @@ export default {
         },
         {
           field: 'name',
-          label: 'Candidate\'s Name',
+          label: 'Candidate\'s name',
         },
         {
           field: 'datasets',
-          label: 'Active Datasets'
+          label: 'Active datasets'
         },
       ],
       candidate: ''

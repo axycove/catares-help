@@ -100,28 +100,28 @@
                 field="grade"
                 label="Grade"
                 v-slot="props"
-                >{{ props.row.grade }}</b-table-column
+                ><b>{{ props.row.grade }}</b></b-table-column
               >
               <b-table-column
                 centered
                 field="credits"
                 label="Credits"
                 v-slot="props"
-                >{{ props.row.credits }}</b-table-column
+                ><b>{{ props.row.credits }}</b></b-table-column
               >
               <b-table-column
                 centered
                 field="points"
                 label="Points"
                 v-slot="props"
-                >{{ props.row.points }}</b-table-column
+                ><b>{{ props.row.points }}</b></b-table-column
               >
               <b-table-column
                 centered
                 field="gradePoints"
                 label="Grade Points"
                 v-slot="props"
-                >{{ props.row.gradePoints }}</b-table-column
+                ><b>{{ fmtNum(props.row.gradePoints) }}</b></b-table-column
               >
               <b-table-column centered>
                 <template v-slot:default="{ row }">
@@ -150,7 +150,7 @@
                     {{ item.points }}
                   </td>
                   <td class="has-text-centered">
-                    {{ item.gradePoints }}
+                    {{ fmtNum(item.gradePoints) }}
                   </td>
                   <td>
                     <b-field grouped>

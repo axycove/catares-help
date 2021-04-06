@@ -3,7 +3,7 @@
     <section class="hero is-primary">
       <div class="hero-body">
         <p class="title">Catastrophic Results Helper :: <i>catares-help</i></p>
-        <p class="subtitle">An ad-hoc result compilation system!</p>
+        <p class="subtitle">An ad-hoc result compilation system! Made with &#128151; by NixowL. :)</p>
       </div>
     </section>
     <section class="section" v-show="displayTop">
