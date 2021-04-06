@@ -25,13 +25,13 @@
     </div>
     <template v-if="courseList.length">
       <div class="columns">
-        <div class="is-half" style="padding-left: 10px">
-          <b-field grouped>
+        <div class="column is-one-quarter" style="padding-left: 10px">
+          <b-field grouped group-multiline>
             <b-select
               placeholder="Select course..."
               v-model="selectedCourses"
               multiple
-              native-size="8"
+              native-size="14"
             >
               <option
                 :value="option"
@@ -41,10 +41,32 @@
                 {{ option.code + " : " + option.title }}
               </option>
             </b-select>
-
-            <b-select placeholder="Select dataset..." v-model="dataset">
+            <b-field>
+              <b-button
+                type="is-primary"
+                icon-left="check-outline"
+                @click="addToTable"
+                >Add to Table</b-button
+              >
+            </b-field>
+            <b-select placeholder="Dataset..." v-model="dataset">
               <option :value="option" v-for="option in datasets" :key="option">
                 {{ option }}
+              </option>
+            </b-select>
+            <b-select
+              placeholder="Pass grade..."
+              v-model="passGrade"
+              v-if="bypassGradeYear || dataset"
+            >
+              <option
+                :value="option.letter"
+                v-for="option in gradeList[
+                  bypassGradeYear ? bypassGradeYear : dataset.split('_')[0]
+                ].data"
+                :key="option.id"
+              >
+                {{ option.letter }}
               </option>
             </b-select>
           </b-field>
@@ -61,22 +83,8 @@
               </b-radio>
             </div>
           </b-field>
-          <b-button
-            type="is-primary"
-            icon-left="check-outline"
-            @click="addToTable"
-            >Add to Table</b-button
-          >
         </div>
-        <div
-          class="is-half"
-          style="
-            margin-left: 10px;
-            padding-left: 10px;
-            border-left: 1px solid #ccc;
-            width: 65%;
-          "
-        >
+        <div class="column is-two-thirds" style="border-left: 1px solid #ccc">
           <b-field>
             <b-table
               :data="data"
@@ -93,7 +101,7 @@
                 field="description"
                 label="Description"
                 v-slot="props"
-                width="500"
+                width="800"
                 ><b>{{ props.row.description }}</b></b-table-column
               >
               <b-table-column
@@ -138,7 +146,11 @@
                 </template>
               </b-table-column>
               <template slot="detail" slot-scope="props">
-                <tr v-for="item in props.row.items" :key="item.code">
+                <tr
+                  v-for="item in props.row.items"
+                  :key="item.code"
+                  :class="item.grade > passGrade ? 'has-text-danger' : ''"
+                >
                   <td></td>
                   <td>&nbsp;&nbsp;&nbsp;&nbsp;{{ item.description }}</td>
                   <td class="has-text-centered">
@@ -160,7 +172,7 @@
                         @click="changeGrade(item)"
                         type="is-primary is-rounded"
                         size="is-small"
-                         style="display: table"
+                        style="display: table"
                       ></b-button>
                       <b-button
                         icon-left="arrow-down"
@@ -180,7 +192,7 @@
           </b-field>
         </div>
         <div class="content is-summary">
-          <h6>SUMMARY</h6>
+          <p class="heading">SUMMARY</p>
           <p>
             CTGP : <b>{{ totals.totalgradepoints }}</b>
             <br />
@@ -188,6 +200,10 @@
             <br />
             CGPA : <b>{{ fmtNum(totals.CGPA) }}</b>
           </p>
+          <template v-if="collatedCarryovers.length">
+            <p class="heading">CARRY OVERS</p>
+            <p>{{ collatedCarryovers }}</p>
+          </template>
         </div>
       </div>
     </template>
@@ -220,6 +236,21 @@ export default {
     },
     gradeYears() {
       return Object.keys(this.gradeList)
+    },
+    collatedCarryovers() {
+      const carryovers = []
+      this.data.forEach(dataset => {
+        dataset.items.forEach(result => {
+          let courseCode = result.code.split('_')[0]
+          let foundIndex = carryovers.indexOf(courseCode)
+          if (this.passGrade < result.grade) {
+            if (foundIndex === -1) carryovers.push(courseCode)
+          } else if (foundIndex !== -1) {
+            carryovers.splice(foundIndex, 1)
+          }
+        })
+      })
+      return carryovers.join(', ')
     }
   },
   props: {
@@ -256,7 +287,8 @@ export default {
       dataset: null,
       selectedCourses: [],
       bypassGradeYear: '',
-      candidate: ''
+      candidate: '',
+      passGrade: null
     }
   },
   methods: {
@@ -380,22 +412,28 @@ export default {
   padding: 10px;
   border-radius: 5px;
   height: max-content;
-  color: fuchsia;
+  /* color: crimson; */
   margin-left: 10px;
   background: lavender;
   box-shadow: 3px 3px #ca91d2;
+  width: 10rem;
+}
+
+.is-summary .heading {
+  font-weight: bold;
+  font-size: .8rem;
 }
 
 .content.cand-info {
   float: right;
   margin-top: 20px;
   position: absolute;
-  right: 45px;
+  right: 1.5rem;
   font-size: 1.2rem;
   font-weight: bold;
 }
 
 td .field.is-grouped {
-    justify-content: center !important;
+  justify-content: center !important;
 }
 </style>
