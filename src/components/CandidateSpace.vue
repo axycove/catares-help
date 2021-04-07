@@ -10,7 +10,7 @@
       >
       <hr />
     </template>
-    <p class="content cand-info">
+    <p class="content cand-info" v-show="!displayTop">
       <span>{{ candidate }}</span>
     </p>
     <div class="block">
@@ -23,9 +23,9 @@
         >Show Top</b-button
       >
     </div>
-    <template v-if="courseList.length">
+    <template v-if="courseList.length && !displayTop">
       <div class="columns">
-        <div class="column" style="padding-left: 10px">
+        <div class="column">
           <b-field grouped group-multiline>
             <b-select
               placeholder="Select course..."
@@ -90,6 +90,7 @@
               :data="data"
               ref="table"
               detailed
+              striped
               hoverable
               custom-detail-row
               detail-key="description"
@@ -101,7 +102,7 @@
                 field="description"
                 label="Description"
                 v-slot="props"
-                width="750"
+                width="450"
                 ><b>{{ props.row.description }}</b></b-table-column
               >
               <b-table-column
@@ -149,7 +150,8 @@
                 <tr
                   v-for="item in props.row.items"
                   :key="item.code"
-                  :style="item.grade > passGrade ? 'color: fuchsia;' : ''"
+                  :style="item.grade > passGrade ? 'color: fuchsia' : ''"
+                  :class="markGoodRetake(item) ? 'has-text-success-darker' : ''"
                 >
                   <td></td>
                   <td>&nbsp;&nbsp;&nbsp;&nbsp;{{ item.description }}</td>
@@ -246,6 +248,10 @@ export default {
           if (this.passGrade < result.grade) {
             if (foundIndex === -1) carryovers.push(courseCode)
           } else if (foundIndex !== -1) {
+            this.passedCarryovers.push({
+              courseCode,
+              dataset: result.code.split('_').splice(1, 2).join('_')
+            })
             carryovers.splice(foundIndex, 1)
           }
         })
@@ -288,7 +294,8 @@ export default {
       selectedCourses: [],
       bypassGradeYear: '',
       candidate: '',
-      passGrade: null
+      passGrade: null,
+      passedCarryovers: []
     }
   },
   methods: {
@@ -401,7 +408,18 @@ export default {
         const results = JSON.parse(localStorage['catares-results'])[cand]
         this.data = results ? results : []
       }
+    },
+    markGoodRetake(resultRow) {
+      let passedRetake = false
+      this.passedCarryovers.forEach(pc => {
+        if (!passedRetake) {
+          passedRetake = pc.courseCode == resultRow.code.split('_')[0] &&
+            pc.dataset == resultRow.code.split('_').splice(1, 2).join('_')
+        }
+      })
+      return passedRetake
     }
+
   }
 }
 </script>
@@ -421,7 +439,7 @@ export default {
 
 .is-summary .heading {
   font-weight: bold;
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 
 .is-summary .detail {
@@ -439,5 +457,9 @@ export default {
 
 td .field.is-grouped {
   justify-content: center !important;
+}
+
+.has-text-success-darker {
+  color: #003a00 !important;
 }
 </style>
