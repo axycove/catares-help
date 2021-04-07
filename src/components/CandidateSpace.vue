@@ -410,14 +410,10 @@ export default {
       }
     },
     markGoodRetake(resultRow) {
-      let passedRetake = false
-      this.passedCarryovers.forEach(pc => {
-        if (!passedRetake) {
-          passedRetake = pc.courseCode == resultRow.code.split('_')[0] &&
-            pc.dataset == resultRow.code.split('_').splice(1, 2).join('_')
-        }
+      return this.passedCarryovers.every(pc => {
+        return pc.courseCode != resultRow.code.split('_')[0] &&
+          pc.dataset != resultRow.code.split('_').splice(1, 2).join('_')
       })
-      return passedRetake
     }
 
   }
@@ -460,6 +456,6 @@ td .field.is-grouped {
 }
 
 .has-text-success-darker {
-  color: #003a00 !important;
+  color: #367036 !important;
 }
 </style>
