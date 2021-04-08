@@ -410,10 +410,14 @@ export default {
       }
     },
     markGoodRetake(resultRow) {
-      return this.passedCarryovers.every(pc => {
-        return pc.courseCode != resultRow.code.split('_')[0] &&
-          pc.dataset != resultRow.code.split('_').splice(1, 2).join('_')
+      let passedRetake = false
+      this.passedCarryovers.forEach(pc => {
+        if (!passedRetake) {
+          passedRetake = pc.courseCode == resultRow.code.split('_')[0] &&
+            pc.dataset == resultRow.code.split('_').splice(1, 2).join('_')
+        }
       })
+      return passedRetake 
     }
 
   }
