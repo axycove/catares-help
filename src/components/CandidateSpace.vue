@@ -151,7 +151,7 @@
                   v-for="item in props.row.items"
                   :key="item.code"
                   :style="item.grade > passGrade ? 'color: #f14668' : ''"
-                  :class="markGoodRetake(item) ? 'has-text-success-darker' : ''"
+                  :class="markGoodRetake(item) ? 'has-text-primary' : ''"
                 >
                   <td></td>
                   <td>&nbsp;&nbsp;&nbsp;&nbsp;{{ item.description }}</td>
@@ -454,9 +454,5 @@ export default {
 
 td .field.is-grouped {
   justify-content: center !important;
-}
-
-.has-text-success-darker {
-  color: #367036 !important;
 }
 </style>
