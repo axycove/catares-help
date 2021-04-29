@@ -102,7 +102,7 @@
                 field="description"
                 label="Description"
                 v-slot="props"
-                width="450"
+                width="600"
                 ><b>{{ props.row.description }}</b></b-table-column
               >
               <b-table-column
@@ -150,7 +150,7 @@
                 <tr
                   v-for="item in props.row.items"
                   :key="item.code"
-                  :style="item.grade > passGrade ? 'color: fuchsia' : ''"
+                  :style="item.grade > passGrade ? 'color: #f14668' : ''"
                   :class="markGoodRetake(item) ? 'has-text-success-darker' : ''"
                 >
                   <td></td>
@@ -203,7 +203,7 @@
             CGPA : <b>{{ fmtNum(totals.CGPA) }}</b>
           </p>
           <template v-if="collatedCarryovers.length">
-            <p class="heading">CARRY OVERS</p>
+            <p class="heading" style="color: #f14668;">CARRY OVERS</p>
             <p class="detail">{{ collatedCarryovers }}</p>
           </template>
         </div>
@@ -440,10 +440,7 @@ export default {
 .is-summary .heading {
   font-weight: bold;
   font-size: 0.8rem;
-}
-
-.is-summary .detail {
-  color: fuchsia;
+  margin-bottom: .5em !important;
 }
 
 .content.cand-info {

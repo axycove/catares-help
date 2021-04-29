@@ -3,7 +3,10 @@
     <section class="hero is-primary">
       <div class="hero-body">
         <p class="title">Catastrophic Results Helper :: <i>catares-help</i></p>
-        <p class="subtitle">An ad-hoc results compilation system! Made with &#128151; by NixowL. :)</p>
+        <p class="subtitle">
+          An ad-hoc results compilation system! Made with &#128151; by NixowL.
+          :)
+        </p>
       </div>
     </section>
     <section class="section" v-show="displayTop">
@@ -102,9 +105,7 @@ export default {
         props: { repos: this.repos, selectedYear: this.selectedYear },
         hasModalCard: true,
         events: {
-          'store-db': () => {
-            this.storeDb()
-          }
+          'store-db': () => this.storeDb()
         }
       })
     },
@@ -115,9 +116,7 @@ export default {
         props: { gradeList: this.gradeList, selectedYear: this.selectedYear },
         hasModalCard: true,
         events: {
-          'store-db': () => {
-            this.storeDb()
-          }
+          'store-db': () => this.storeDb()
         }
       })
     },
