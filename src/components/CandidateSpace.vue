@@ -435,6 +435,7 @@ export default {
   background: lavender;
   box-shadow: 3px 3px #ca91d2;
   width: 10rem;
+  padding: .5rem .8rem;
 }
 
 .is-summary .heading {

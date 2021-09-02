@@ -90,14 +90,11 @@ export default {
         const resKeys = Object.keys(JSON.parse(localStorage['catares-results']))
         let i = 0
         resKeys.forEach(rk => {
-          var datasets = []
-          results[rk].forEach(ds => {
-            datasets.push(ds.description)
-          })
+          let datasets = results[rk].map(ds => ds.description)
           array.push({
             id: ++i,
             name: rk,
-            datasets: datasets.join(',')
+            datasets: datasets.join(', ')
           })
         })
       }
