@@ -126,9 +126,6 @@ export default {
         type: 'is-danger',
         hasIcon: true,
         onConfirm: () => {
-          // await fetch(`${process.env.API_URL}/results`)
-          //   .then(res => res.json())
-          //   .then(data => this.results = data)
           if (this.results) {
             delete this.results[row.name]
             fetch(`${process.env.API_URL}/results`, {
@@ -138,10 +135,15 @@ export default {
               },
               body: JSON.stringify(this.results)
             })
-
+              .then(() => {
+                fetch(`${process.env.API_URL}/results`)
+                  .then(res => res.json())
+                  .then(data => this.results = data)
+              })
 
           }
-          this.$buefy.toast.open('Candidate delete!')
+          this.$buefy.toast.open('Candidate deleted!')
+
         }
       })
 
