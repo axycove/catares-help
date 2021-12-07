@@ -375,8 +375,10 @@ export default {
           await fetch(`${process.env.API_URL}/results`,
             {
               method: 'POST',
-              'Content-Type': 'application/json',
-              body: JSON.stringify(results)
+              body: JSON.stringify(results),
+              headers: {
+                'Content-Type': 'application/json',
+              }
             })
         }
 

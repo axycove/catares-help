@@ -42,7 +42,8 @@ app.get('/api/results', function (req, res) {
 });
 
 app.post('/api/results', function (req, res) {
-  fs.writeFile(path.join(__dirname, '/data/catares-results.json'), req.body, function (err, data) {
+
+  fs.writeFile(path.join(__dirname, '/data/catares-results.json'), JSON.stringify(req.body), function (err, data) {
     if (err) {
       throw err;
     }

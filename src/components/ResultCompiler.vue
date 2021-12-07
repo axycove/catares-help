@@ -140,13 +140,17 @@ export default {
       await fetch(`${process.env.API_URL}/progs/${this.selectedProg.toLowerCase()}`,
         {
           method: 'POST',
-          'Content-Type': 'application/json',
+          headers: {
+            'Content-Type': 'application/json',
+          },
           body: JSON.stringify(this.repos)
         })
       if (this.gradeList) {
         await fetch(`${process.env.API_URL}/grades`, {
           method: 'POST',
-          'Content-Type': 'application/json',
+          headers: {
+            'Content-Type': 'application/json',
+          },
           body: JSON.stringify(this.gradeList)
         })
       }
