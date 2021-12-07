@@ -4,14 +4,14 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 
-const corsOptions = {
-  origin: 'http://localhost:8081',
+const options = {
+  origin: 'http://ec2-3-140-49-1.us-east-2.compute.amazonaws.com/',
   optionSuccessStatus: 200,
 };
 
-app.use(cors(corsOptions));
+app.use(cors(options));
 
-app.use(express.json())
+app.use(express.json());
 
 app.get('/api/grades', function (req, res) {
   fs.readFile(path.join(__dirname, '/data/catares-grades.json'), function (err, data) {
@@ -27,7 +27,7 @@ app.post('/api/grades', function (req, res) {
     if (err) {
       throw err;
     }
-    res.send('Grades file updated successfully.')
+    res.send('Grades file updated successfully.');
   });
 
 });
@@ -47,7 +47,7 @@ app.post('/api/results', function (req, res) {
     if (err) {
       throw err;
     }
-    res.send('Results file updated successfully.')
+    res.send('Results file updated successfully.');
   });
 
 });
@@ -79,7 +79,7 @@ app.get('/api/progs/:code', function (req, res) {
 
 app.post('/api/progs/:code', function (req, res) {
   if (progs.some(p => p.toLowerCase() == req.params.code)) {
-    fs.writeFile(path.join(__dirname, `/data/catares-${req.params.code}.json`), req.body, function (err, data) {
+    fs.writeFile(path.join(__dirname, `/data/catares-${req.params.code}.json`), JSON.stringify(req.body), function (err, data) {
       if (err) {
         throw err;
       }
