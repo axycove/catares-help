@@ -5,7 +5,9 @@ const path = require('path');
 const cors = require('cors');
 
 const options = {
-  origin: 'http://ec2-3-140-49-1.us-east-2.compute.amazonaws.com/',
+  origin: process.env === 'production' 
+    ? 'http://ec2-3-140-49-1.us-east-2.compute.amazonaws.com/'
+    : 'http://localhost:8081',
   optionSuccessStatus: 200,
 };
 
