@@ -85,12 +85,11 @@ export default {
   computed: {
     candidateList() {
       const array = []
-      if (localStorage['catares-results']) {
-        const results = JSON.parse(localStorage['catares-results'])
-        const resKeys = Object.keys(JSON.parse(localStorage['catares-results']))
+      if (this.results) {
+        const resKeys = Object.keys(this.results)
         let i = 0
         resKeys.forEach(rk => {
-          let datasets = results[rk].map(ds => ds.description)
+          let datasets = this.results[rk].map(ds => ds.description)
           array.push({
             id: ++i,
             name: rk,
@@ -104,12 +103,18 @@ export default {
   data() {
     return {
       checkedRows: [],
-      candidate: ''
+      candidate: '',
+      results: {}
     }
 
   },
+  mounted() {
+    fetch(`${process.env.API_URL}/results`)
+      .then(res => res.json())
+      .then(data => this.results = data)
+  },
   methods: {
-    initSpace(val) {
+    async initSpace(val) {
       this.$emit('init-space', val)
       this.$parent.close()
     },
@@ -121,10 +126,18 @@ export default {
         type: 'is-danger',
         hasIcon: true,
         onConfirm: () => {
-          if (localStorage['catares-results']) {
-            const results = JSON.parse(localStorage['catares-results'])
-            delete results[row.name]
-            localStorage['catares-results'] = JSON.stringify(results)
+          // await fetch(`${process.env.API_URL}/results`)
+          //   .then(res => res.json())
+          //   .then(data => this.results = data)
+          if (this.results) {
+            delete this.results[row.name]
+            fetch(`${process.env.API_URL}/results`, {
+              method: 'POST',
+              'Content-Type': 'application/json',
+              body: JSON.stringify(this.results)
+            })
+
+
           }
           this.$buefy.toast.open('Candidate delete!')
         }

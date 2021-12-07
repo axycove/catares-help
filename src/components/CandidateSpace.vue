@@ -203,7 +203,7 @@
             CGPA : <b>{{ fmtNum(totals.CGPA) }}</b>
           </p>
           <template v-if="collatedCarryovers.length">
-            <p class="heading" style="color: #f14668;">CARRY OVERS</p>
+            <p class="heading" style="color: #f14668">CARRY OVERS</p>
             <p class="detail">{{ collatedCarryovers }}</p>
           </template>
         </div>
@@ -299,9 +299,12 @@ export default {
     }
   },
   methods: {
-    initDb() {
-      const dbEntryName = 'catares-' + this.selectedProg.toLowerCase()
-      const parsedList = localStorage[dbEntryName] ? JSON.parse(localStorage[dbEntryName]).courseList : null
+    async initDb() {
+      let repos = null
+      await fetch(`${process.env.API_URL}/progs/${this.selectedProg.toLowerCase()}`)
+        .then(res => res.json())
+        .then(data => repos = data)
+      const parsedList = repos ? repos.courseList : null
       if (parsedList) this.courseList = parsedList[this.selectedYear].data
       this.$emit('show-top', false)
     },
@@ -337,7 +340,7 @@ export default {
 
       this.data.push(group)
     },
-    changeGrade(obj, upwards = true) {
+    async changeGrade(obj, upwards = true) {
       const gradeList = this.gradeList[this.bypassGradeYear ? this.bypassGradeYear : this.dataset.split('_')[0]]
       if (gradeList) {
         const grade = gradeList.data.find(item => item.letter == obj.grade)
@@ -363,10 +366,18 @@ export default {
         })
 
         // save candidate space
-        if (localStorage['catares-results']) {
-          const results = JSON.parse(localStorage['catares-results'])
+        let results = null
+        await fetch(`${process.env.API_URL}/results`)
+          .then(res => res.json())
+          .then(data => results = data)
+        if (results) {
           results[this.candidate] = this.data
-          localStorage['catares-results'] = JSON.stringify(results)
+          await fetch(`${process.env.API_URL}/results`,
+            {
+              method: 'POST',
+              'Content-Type': 'application/json',
+              body: JSON.stringify(results)
+            })
         }
 
       } else {
@@ -394,7 +405,7 @@ export default {
         }
       })
     },
-    initSpace(cand) {
+    async initSpace(cand) {
       this.$buefy.toast.open({
         duration: 5000,
         type: 'is-success',
@@ -404,8 +415,12 @@ export default {
       this.initDb()
 
       this.candidate = cand
-      if (localStorage['catares-results'] && cand) {
-        const results = JSON.parse(localStorage['catares-results'])[cand]
+      let results = null
+      await fetch(`${process.env.API_URL}/results`)
+        .then(res => res.json())
+        .then(data => results = data)
+      if (results && cand) {
+        results = results[cand]
         this.data = results ? results : []
       }
     },
@@ -417,9 +432,8 @@ export default {
             pc.dataset == resultRow.code.split('_').splice(1, 2).join('_')
         }
       })
-      return passedRetake 
+      return passedRetake
     }
-
   }
 }
 </script>
@@ -435,13 +449,13 @@ export default {
   background: lavender;
   box-shadow: 3px 3px #ca91d2;
   width: 10rem;
-  padding: .5rem .8rem;
+  padding: 0.5rem 0.8rem;
 }
 
 .is-summary .heading {
   font-weight: bold;
   font-size: 0.8rem;
-  margin-bottom: .5em !important;
+  margin-bottom: 0.5em !important;
 }
 
 .content.cand-info {

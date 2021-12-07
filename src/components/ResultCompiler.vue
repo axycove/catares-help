@@ -2,7 +2,7 @@
   <div>
     <section class="hero is-primary">
       <div class="hero-body">
-        <p class="title">Catastrophic Results Helper :: <i>catares-help</i></p>
+        <p class="title">Catasys Results Helper :: <i>catares-help</i></p>
         <p class="subtitle">
           An ad-hoc results compilation system! Made with &#128151; by NixowL.
           :)
@@ -120,23 +120,35 @@ export default {
         }
       })
     },
-    initDb() {
-      const entryName = 'catares-' + this.selectedProg.toLowerCase()
-      if (localStorage['catares-grades']) this.gradeList = JSON.parse(localStorage['catares-grades'])
-      if (localStorage[entryName]) {
-        this.repos = JSON.parse(localStorage[entryName])
-      } else {
+    async initDb() {
+      await fetch(`${process.env.API_URL}/grades`)
+        .then(res => res.json())
+        .then(data => this.gradeList = data)
+
+      await fetch(`${process.env.API_URL}/progs/${this.selectedProg.toLowerCase()}`)
+        .then(res => res.json())
+        .then(data => this.repos = data || {})
+
+      if (!this.repos) {
         let courseList = this.repos.courseList[this.selectedYear]
         this.repos.courseList[this.selectedYear] = courseList != undefined ? courseList : { data: [] }
         let gradeList = this.gradeList[this.selectedYear]
         this.gradeList[this.selectedYear] = gradeList != undefined ? gradeList : { data: [] }
       }
     },
-    storeDb() {
-      const entryName = 'catares-' + this.selectedProg.toLowerCase()
-      localStorage[entryName] = JSON.stringify(this.repos)
+    async storeDb() {
+      await fetch(`${process.env.API_URL}/progs/${this.selectedProg.toLowerCase()}`,
+        {
+          method: 'POST',
+          'Content-Type': 'application/json',
+          body: JSON.stringify(this.repos)
+        })
       if (this.gradeList) {
-        localStorage['catares-grades'] = JSON.stringify(this.gradeList)
+        await fetch(`${process.env.API_URL}/grades`, {
+          method: 'POST',
+          'Content-Type': 'application/json',
+          body: JSON.stringify(this.gradeList)
+        })
       }
     },
     showTop(val) {
