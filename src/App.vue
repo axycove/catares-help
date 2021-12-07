@@ -14,3 +14,9 @@ export default {
   }
 }
 </script>
+
+<style >
+html {
+  font-size: 70% !important;
+}
+</style>

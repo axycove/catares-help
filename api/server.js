@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 
+console.log(process.env.NODE_ENV)
 const options = {
   origin: process.env.NODE_ENV === 'production' 
     ? 'http://ec2-3-140-49-1.us-east-2.compute.amazonaws.com/'

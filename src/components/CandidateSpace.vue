@@ -472,4 +472,45 @@ export default {
 td .field.is-grouped {
   justify-content: center !important;
 }
+
+@media only screen and (max-width: 600px) {
+  .column {
+    padding: 0 !important;
+  }
+
+  .content.cand-info {
+    position: inherit;
+  }
+}
+
+@media only screen and (max-width: 915px) {
+  section {
+    display: flex !important;
+    flex-direction: column;
+  }
+
+  .content.cand-info {
+    margin-top: 0;
+    position: inherit;
+  }
+
+  .columns {
+    flex-direction: column;
+  }
+
+  .content.is-summary {
+    margin-left: 0;
+    margin-top: 1em;
+    width: 100%;
+  }
+
+  .content.is-summary .detail {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .field .block {
+    margin-bottom: 10px;
+  }
+}
 </style>
