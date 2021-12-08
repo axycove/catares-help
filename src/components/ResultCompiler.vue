@@ -4,7 +4,7 @@
       <div class="hero-body">
         <p class="title">Catasys Results Helper :: <i>catares-help</i></p>
         <p class="subtitle">
-          An ad-hoc results compilation system! Made with &#128151; by NixowL.
+          An ad-hoc results compilation system! Made with &#128151; by 0x4b656e.
           :)
         </p>
       </div>
