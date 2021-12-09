@@ -84,7 +84,7 @@
             </div>
           </b-field>
         </div>
-        <div style="border-left: 1px solid #ccc">
+        <div class="table-container">
           <b-field>
             <b-table
               :data="data"
@@ -473,6 +473,10 @@ td .field.is-grouped {
   justify-content: center !important;
 }
 
+.table-container {
+  border-left: 1px solid #ccc;
+}
+
 @media only screen and (max-width: 600px) {
   .column {
     padding: 0 !important;
@@ -511,6 +515,10 @@ td .field.is-grouped {
 
   .field .block {
     margin-bottom: 10px;
+  }
+
+  .table-container {
+    border-left: none;
   }
 }
 </style>
