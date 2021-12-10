@@ -214,6 +214,7 @@
 
 <script>
 import CandidateListModalForm from './CandidateListModalForm.vue'
+import { getResults, getProgs, postResults } from '../services/api'
 
 export default {
   computed: {
@@ -301,8 +302,7 @@ export default {
   methods: {
     async initDb() {
       let repos = null
-      await fetch(`${process.env.API_URL}/progs/${this.selectedProg.toLowerCase()}`)
-        .then(res => res.json())
+      await getProgs(this.selectedProg.toLowerCase())
         .then(data => repos = data)
       const parsedList = repos ? repos.courseList : null
       if (parsedList) this.courseList = parsedList[this.selectedYear].data
@@ -310,7 +310,7 @@ export default {
     },
     addToTable() {
       if (!this.dataset) return
-      let group = this.data.find(({ description }) => description == this.dataset)
+      let group = this.data.find(({ description }) => description === this.dataset)
 
       if (group === undefined) {
         group = {}
@@ -325,7 +325,7 @@ export default {
       }
 
       this.selectedCourses.forEach(course => {
-        if (!group.items.find(item => item.code.split('_')[0] == course.code)) {
+        if (!group.items.find(item => item.code.split('_')[0] === course.code)) {
           group.items.push(
             {
               code: course.code + '_' + this.dataset,
@@ -343,7 +343,7 @@ export default {
     async changeGrade(obj, upwards = true) {
       const gradeList = this.gradeList[this.bypassGradeYear ? this.bypassGradeYear : this.dataset.split('_')[0]]
       if (gradeList) {
-        const grade = gradeList.data.find(item => item.letter == obj.grade)
+        const grade = gradeList.data.find(item => item.letter === obj.grade)
         let position = gradeList.data.indexOf(grade)
         let newGrade
         if (upwards) {
@@ -365,22 +365,7 @@ export default {
           dataset.gradePoints += row.gradePoints
         })
 
-        // save candidate space
-        let results = null
-        await fetch(`${process.env.API_URL}/results`)
-          .then(res => res.json())
-          .then(data => results = data)
-        if (results) {
-          results[this.candidate] = this.data
-          await fetch(`${process.env.API_URL}/results`,
-            {
-              method: 'POST',
-              body: JSON.stringify(results),
-              headers: {
-                'Content-Type': 'application/json',
-              }
-            })
-        }
+        await postResults(this.candidate, this.data)
 
       } else {
         this.$buefy.toast.open({
@@ -414,15 +399,13 @@ export default {
         message:
           `Candidate space loaded for ${cand}.`
       })
-      this.initDb()
 
+      this.initDb()
       this.candidate = cand
       let results = null
-      await fetch(`${process.env.API_URL}/results`)
-        .then(res => res.json())
+      await getResults(cand)
         .then(data => results = data)
       if (results && cand) {
-        results = results[cand]
         this.data = results ? results : []
       }
     },

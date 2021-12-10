@@ -81,37 +81,20 @@
 </template>
 
 <script>
+import { deleteCandidate, getCandidates } from '../services/api'
+
 export default {
-  computed: {
-    candidateList() {
-      const array = []
-      if (this.results) {
-        const resKeys = Object.keys(this.results)
-        let i = 0
-        resKeys.forEach(rk => {
-          let datasets = this.results[rk].map(ds => ds.description)
-          array.push({
-            id: ++i,
-            name: rk,
-            datasets: datasets.join(', ')
-          })
-        })
-      }
-      return array
-    }
-  },
   data() {
     return {
       checkedRows: [],
       candidate: '',
-      results: {}
+      candidateList: []
     }
 
   },
   mounted() {
-    fetch(`${process.env.API_URL}/results`)
-      .then(res => res.json())
-      .then(data => this.results = data)
+    getCandidates()
+      .then(data => { this.candidateList = data })
   },
   methods: {
     async initSpace(val) {
@@ -125,23 +108,11 @@ export default {
         confirmText: 'Delete Candidate',
         type: 'is-danger',
         hasIcon: true,
-        onConfirm: () => {
-          if (this.results) {
-            delete this.results[row.name]
-            fetch(`${process.env.API_URL}/results`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(this.results)
-            })
-              .then(() => {
-                fetch(`${process.env.API_URL}/results`)
-                  .then(res => res.json())
-                  .then(data => this.results = data)
-              })
+        onConfirm: async () => {
 
-          }
+          await deleteCandidate(row.name)
+            .then(data => this.candidateList = data)
+
           this.$buefy.toast.open('Candidate deleted!')
 
         }

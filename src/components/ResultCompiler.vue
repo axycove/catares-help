@@ -63,12 +63,12 @@
 import CourseModalForm from './CourseModalForm'
 import GradeModalForm from './GradeModalForm.vue'
 import CandidateSpace from './CandidateSpace.vue'
+import { getGrades, postGrades, postProgs, getProgs } from '../services/api'
 
 export default {
   components: {
     CandidateSpace
   },
-  computed: {},
   data() {
     return {
       repos: {
@@ -121,12 +121,10 @@ export default {
       })
     },
     async initDb() {
-      await fetch(`${process.env.API_URL}/grades`)
-        .then(res => res.json())
+      await getGrades()
         .then(data => this.gradeList = data)
 
-      await fetch(`${process.env.API_URL}/progs/${this.selectedProg.toLowerCase()}`)
-        .then(res => res.json())
+      await getProgs(this.selectedProg.toLowerCase())
         .then(data => this.repos = data || {})
 
       if (!this.repos) {
@@ -137,22 +135,9 @@ export default {
       }
     },
     async storeDb() {
-      await fetch(`${process.env.API_URL}/progs/${this.selectedProg.toLowerCase()}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(this.repos)
-        })
+      await postProgs(this.selectedProg.toLowerCase(), this.repos)
       if (this.gradeList) {
-        await fetch(`${process.env.API_URL}/grades`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(this.gradeList)
-        })
+        await postGrades(this.gradeList)
       }
     },
     showTop(val) {
