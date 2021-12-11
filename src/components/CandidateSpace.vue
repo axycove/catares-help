@@ -194,7 +194,7 @@
           </b-field>
         </div>
         <div class="content is-summary">
-          <p class="heading">SUMMARY</p>
+          <p class="heading is-italic">SUMMARY</p>
           <p class="detail">
             CTGP : <b>{{ totals.totalgradepoints }}</b>
             <br />
@@ -203,7 +203,7 @@
             CGPA : <b>{{ fmtNum(totals.CGPA) }}</b>
           </p>
           <template v-if="collatedCarryovers.length">
-            <p class="heading" style="color: #f14668">CARRY OVERS</p>
+            <p class="heading is-italic" style="color: #f14668">CARRY OVERS</p>
             <p class="detail">{{ collatedCarryovers }}</p>
           </template>
         </div>
