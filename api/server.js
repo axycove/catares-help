@@ -3,59 +3,13 @@ const app = express();
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
-
-// INITVARS
-
-const options = {
-  origin: process.env.NODE_ENV === 'production'
-    ? 'http://ec2-3-140-49-1.us-east-2.compute.amazonaws.com'
-    : 'http://localhost:8081',
-  optionSuccessStatus: 200,
-}
-
-function getCandidateList(res) {
-  const array = []
-  fs.readFile(path.join(__dirname, '/data/catares-results.json'), function (err, data) {
-    if (err) {
-      throw err;
-    }
-    data = data ? JSON.parse(data) : null
-
-    if (data) {
-      const resKeys = Object.keys(data)
-      let i = 0
-      resKeys.forEach(rk => {
-        let datasets = data[rk].map(ds => ds.description)
-        array.push({
-          id: ++i,
-          name: rk,
-          datasets: datasets.join(', ')
-        })
-      })
-    }
-    res.send(array)
-  });
-
-}
-
-const progs = [
-  'ACCHFT',
-  'ACCHPT',
-  'ACCNFT',
-  'ACCNPT',
-  'QUSHFT',
-  'QUSHPT',
-  'QUSNFT',
-  'QUSNPT'
-]
-
-// ROUTES
+const { options, getCandidateList, progs } = require('./datainit')
 
 app.use(cors(options));
 app.use(express.json());
 
 app.get('/api/grades', function (req, res) {
-  fs.readFile(path.join(__dirname, '/data/catares-grades.json'), function (err, data) {
+  fs.readFile(path.resolve(__dirname, './data/catares-grades.json'), function (err, data) {
     if (err) {
       throw err;
     }
@@ -64,7 +18,7 @@ app.get('/api/grades', function (req, res) {
 });
 
 app.post('/api/grades', function (req, res) {
-  fs.writeFile(path.join(__dirname, '/data/catares-grades.json'), JSON.stringify(req.body), function (err, data) {
+  fs.writeFile(path.resolve(__dirname, './data/catares-grades.json'), JSON.stringify(req.body), function (err, data) {
     if (err) {
       throw err;
     }
@@ -74,7 +28,7 @@ app.post('/api/grades', function (req, res) {
 });
 
 app.get('/api/results/:candidate', function (req, res) {
-  fs.readFile(path.join(__dirname, '/data/catares-results.json'), function (err, data) {
+  fs.readFile(path.resolve(__dirname, './data/catares-results.json'), function (err, data) {
     if (err) {
       throw err;
     }
@@ -83,11 +37,11 @@ app.get('/api/results/:candidate', function (req, res) {
 });
 
 app.delete('/api/results/:candidate', function (req, res) {
-  fs.readFile(path.join(__dirname, '/data/catares-results.json'), function (err, data) {
+  fs.readFile(path.resolve(__dirname, './data/catares-results.json'), function (err, data) {
     let results = JSON.parse(data)
     delete results[req.params.candidate]
 
-    fs.writeFile(path.join(__dirname, '/data/catares-results.json'), JSON.stringify(results), function (err) {
+    fs.writeFile(path.resolve(__dirname, './data/catares-results.json'), JSON.stringify(results), function (err) {
       if (err) {
         throw err;
       }
@@ -102,13 +56,12 @@ app.get('/api/candidates', function (req, res) {
 });
 
 app.post('/api/results/:candidate', function (req, res) {
-  fs.readFile(path.join(__dirname, '/data/catares-results.json'), function (err, data) {
+  fs.readFile(path.resolve(__dirname, './data/catares-results.json'), function (err, data) {
     let results = JSON.parse(data)
     delete results[req.params.candidate]
     results[req.params.candidate] = req.body
 
-    console.log(req.params.candidate, 'here......');
-    fs.writeFile(path.join(__dirname, '/data/catares-results.json'), JSON.stringify(results), function (err) {
+    fs.writeFile(path.resolve(__dirname, './data/catares-results.json'), JSON.stringify(results), function (err) {
       if (err) {
         throw err;
       }
@@ -121,7 +74,7 @@ app.post('/api/results/:candidate', function (req, res) {
 
 app.get('/api/progs/:code', function (req, res) {
   if (progs.some(p => p.toLowerCase() == req.params.code)) {
-    fs.readFile(path.join(__dirname, `/data/catares-${req.params.code}.json`), function (err, data) {
+    fs.readFile(path.resolve(__dirname, `./data/catares-${req.params.code}.json`), function (err, data) {
       if (err) {
         res.send('');
         throw err;
@@ -136,7 +89,7 @@ app.get('/api/progs/:code', function (req, res) {
 
 app.post('/api/progs/:code', function (req, res) {
   if (progs.some(p => p.toLowerCase() == req.params.code)) {
-    fs.writeFile(path.join(__dirname, `/data/catares-${req.params.code}.json`), JSON.stringify(req.body), function (err, data) {
+    fs.writeFile(path.resolve(__dirname, `./data/catares-${req.params.code}.json`), JSON.stringify(req.body), function (err, data) {
       if (err) {
         throw err;
       }
