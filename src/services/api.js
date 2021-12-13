@@ -31,7 +31,7 @@ function getProgs(prog) {
 }
 
 function postProgs(prog, repos) {
-  return fetch(`${process.env.API_URL}/results/${prog}`, {
+  return fetch(`${process.env.API_URL}/progs/${prog}`, {
     method: 'POST',
     body: JSON.stringify(repos),
     headers: {

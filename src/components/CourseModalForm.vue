@@ -133,7 +133,7 @@ export default {
         return
       }
 
-      if (this.repos.courseList[this.selectedYear] && this.repos.courseList[this.selectedYear].data.length) {
+      if (this.repos.courseList[this.selectedYear].data.length) {
         this.repos.courseList[this.selectedYear].data.every(element => {
           if (element.code === this.course.code) {
             exists = true;
@@ -161,6 +161,8 @@ export default {
       this.checkedRows.forEach(row => {
         data.splice(data.indexOf(row), 1)
       })
+
+      this.$emit('store-db')
     }
   }
 }

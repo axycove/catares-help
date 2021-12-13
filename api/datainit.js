@@ -38,13 +38,19 @@ module.exports = {
   },
 
   progs: [
-    'ACCHFT',
-    'ACCHPT',
+    'ABENFT',
+    'ABEHFT',
     'ACCNFT',
     'ACCNPT',
+    'ACCHFT',
+    'ACCHPT',
+    'CEGNFT',
+    'CEGHFT',
+    'EEENFT',
+    'EEEHFT',
+    'QUSNFT',
+    'QUSNPT',
     'QUSHFT',
     'QUSHPT',
-    'QUSNFT',
-    'QUSNPT'
   ]
 }

@@ -14,7 +14,7 @@
         <b-select
           placeholder="Select a programme"
           v-model="selectedProg"
-          @input="selectedYear ? initDb : false"
+          @input="initDb"
         >
           <option
             v-for="option in programmes"
@@ -128,18 +128,25 @@ export default {
       })
     },
     async initDb() {
-      await getGrades()
-        .then(data => this.gradeList = data)
+      if (this.selectedYear && this.selectedProg) {
+        await getGrades()
+          .then(data => this.gradeList = data)
 
-      await getProgs(this.selectedProg.toLowerCase())
-        .then(data => this.repos = data || {})
+        await getProgs(this.selectedProg.toLowerCase())
+          .then(data => this.repos = data)
 
-      if (!this.repos) {
-        let courseList = this.repos.courseList[this.selectedYear]
-        this.repos.courseList[this.selectedYear] = courseList != undefined ? courseList : { data: [] }
-        let gradeList = this.gradeList[this.selectedYear]
-        this.gradeList[this.selectedYear] = gradeList != undefined ? gradeList : { data: [] }
+        if (!('courseList' in this.repos)) {
+          this.repos['courseList'] = {
+            [this.selectedYear]: { data: [] }
+          }
+
+          if (!(this.selectedYear in this.gradeList)) {
+            this.gradeList[this.selectedYear] = { data: [] }
+          }
+
+        }
       }
+
     },
     async storeDb() {
       await postProgs(this.selectedProg.toLowerCase(), this.repos)
@@ -153,7 +160,7 @@ export default {
   },
   created() {
     this.populate()
-  },
+  }
 }
 </script>
 
