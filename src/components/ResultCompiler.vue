@@ -61,8 +61,8 @@
 
 <script>
 import CourseModalForm from './CourseModalForm'
-import GradeModalForm from './GradeModalForm.vue'
-import CandidateSpace from './CandidateSpace.vue'
+import GradeModalForm from './GradeModalForm'
+import CandidateSpace from './CandidateSpace'
 import { getGrades, postGrades, postProgs, getProgs } from '../services/api'
 
 export default {
@@ -77,14 +77,21 @@ export default {
       gradeList: {},
       sessions: [],
       programmes: [
-        { code: 'ACCHFT', title: 'Accounting HND Fulltime' },
-        { code: 'ACCHPT', title: 'Accounting HND Parttime' },
+        { code: 'ABENFT', title: 'Agric/Bio-Environmental Engineering ND Fulltime' },
+        { code: 'ABEHFT', title: 'Agric/Bio-Environmental Engineering HND Fulltime' },
         { code: 'ACCNFT', title: 'Accounting ND Fulltime' },
         { code: 'ACCNPT', title: 'Accounting ND Parttime' },
-        { code: 'QUSHFT', title: 'Quantity Surveying HND Fulltime' },
-        { code: 'QUSHPT', title: 'Quantity Surveying HND Parttime' },
+        { code: 'ACCHFT', title: 'Accounting HND Fulltime' },
+        { code: 'ACCHPT', title: 'Accounting HND Parttime' },
+        { code: 'CEGNFT', title: 'Computer Engineering ND Fulltime' },
+        { code: 'CEGHFT', title: 'Computer Engineering HND Fulltime' },
+        { code: 'EEENFT', title: 'Electrical/Electronics Engineering ND Fulltime' },
+        { code: 'EEEHFT', title: 'Electrical/Electronics Engineering HND Fulltime' },
         { code: 'QUSNFT', title: 'Quantity Surveying ND Fulltime' },
         { code: 'QUSNPT', title: 'Quantity Surveying ND Parttime' },
+        { code: 'QUSHFT', title: 'Quantity Surveying HND Fulltime' },
+        { code: 'QUSHPT', title: 'Quantity Surveying HND Parttime' },
+
       ],
       selectedYear: 0,
       selectedProg: '',
