@@ -32,7 +32,7 @@ app.get('/api/results/:candidate', function (req, res) {
     if (err) {
       throw err;
     }
-    res.send(JSON.parse(data)[req.params.candidate]);
+    res.send(JSON.parse(data)[req.params.candidate] || []);
   });
 });
 
@@ -45,14 +45,14 @@ app.delete('/api/results/:candidate', function (req, res) {
       if (err) {
         throw err;
       }
-      getCandidateList(res);
+      getCandidateList(req, res);
     });
 
   });
 });
 
-app.get('/api/candidates', function (req, res) {
-  getCandidateList(res)
+app.get('/api/candidates/:prog', function (req, res) {
+  getCandidateList(req, res);
 });
 
 app.post('/api/results/:candidate', function (req, res) {

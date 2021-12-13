@@ -1,5 +1,5 @@
-function getCandidates() {
-  return fetch(`${process.env.API_URL}/candidates`)
+function getCandidates(prog) {
+  return fetch(`${process.env.API_URL}/candidates/${prog}`)
     .then(res => res.json())
 }
 

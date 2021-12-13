@@ -24,7 +24,7 @@
               field="name"
               label="Candidate's name"
               v-slot="props"
-              >{{ props.row.name }}</b-table-column
+              >{{ props.row.name.split('$')[0] }}</b-table-column
             >
             <b-table-column
               field="datasets"
@@ -64,7 +64,7 @@
             ></b-input>
           </b-field>
           <b-button
-            @click="initSpace(candidate)"
+            @click="initSpace(`${candidate}$${selectedProg}`)"
             icon-left="check"
             type="is-primary"
             >Add</b-button
@@ -84,6 +84,12 @@
 import { deleteCandidate, getCandidates } from '../services/api'
 
 export default {
+  props: {
+    selectedProg: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       checkedRows: [],
@@ -93,7 +99,7 @@ export default {
 
   },
   mounted() {
-    getCandidates()
+    getCandidates(this.selectedProg)
       .then(data => { this.candidateList = data })
   },
   methods: {

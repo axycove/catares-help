@@ -11,16 +11,19 @@
       <hr />
     </template>
     <p class="content cand-info" v-show="!displayTop">
-      <span>{{ candidate }}</span>
+      <span>{{ dispayName }}</span>
     </p>
     <div class="block">
       <b-button
-        @click="$emit('show-top', true)"
+        @click="
+          $emit('show-top', true);
+          saveWork();
+        "
         v-if="!displayTop"
         icon-left="arrow-down"
         type="is-primary is-rounded"
         style="margin-top: 10px"
-        >Show Top</b-button
+        >Save Work & Hide Space</b-button
       >
     </div>
     <template v-if="courseList.length && !displayTop">
@@ -213,11 +216,14 @@
 </template>
 
 <script>
-import CandidateListModalForm from './CandidateListModalForm.vue'
+import CandidateListModalForm from './CandidateListModalForm'
 import { getResults, getProgs, postResults } from '../services/api'
 
 export default {
   computed: {
+    dispayName() {
+      return this.candidate.split('$')[0]
+    },
     datasets() {
       const array = []
       this.sessions.map(element => {
@@ -365,8 +371,6 @@ export default {
           dataset.gradePoints += row.gradePoints
         })
 
-        await postResults(this.candidate, this.data)
-
       } else {
         this.$buefy.toast.open({
           duration: 5000,
@@ -384,6 +388,7 @@ export default {
       this.$buefy.modal.open({
         parent: this,
         component: CandidateListModalForm,
+        props: { selectedProg: this.selectedProg },
         hasModalCard: true,
         events: {
           'init-space': (val) => {
@@ -393,13 +398,6 @@ export default {
       })
     },
     async initSpace(cand) {
-      this.$buefy.toast.open({
-        duration: 5000,
-        type: 'is-success',
-        message:
-          `Candidate space loaded for ${cand}.`
-      })
-
       this.initDb()
       this.candidate = cand
       let results = null
@@ -408,6 +406,13 @@ export default {
       if (results && cand) {
         this.data = results ? results : []
       }
+
+      this.$buefy.toast.open({
+        duration: 5000,
+        type: 'is-success',
+        message:
+          `Candidate space loaded for ${this.dispayName}.`
+      })
     },
     markGoodRetake(resultRow) {
       let passedRetake = false
@@ -418,6 +423,9 @@ export default {
         }
       })
       return passedRetake
+    },
+    async saveWork() {
+      await postResults(this.candidate, this.data)
     }
   }
 }
