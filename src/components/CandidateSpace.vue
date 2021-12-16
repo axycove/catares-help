@@ -212,7 +212,7 @@
             CGPA : <b>{{ fmtNum(totals.CGPA) }}</b>
           </p>
           <template v-if="collatedCarryovers.length">
-            <p class="heading is-italic has-text-danger-dark">CARRY OVERS</p>
+            <p class="heading is-italic has-text-danger">CARRY OVERS</p>
             <p class="detail">{{ collatedCarryovers }}</p>
           </template>
         </div>
@@ -452,7 +452,7 @@ export default {
   margin-left: 10px;
   background: #7957d5;
   box-shadow: 2px 2px #d9d9d9;
-  width: 10rem;
+  min-width: 10rem;
   padding: 0.5rem 0.8rem;
 }
 
