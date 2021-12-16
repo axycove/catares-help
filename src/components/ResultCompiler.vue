@@ -2,6 +2,10 @@
   <div>
     <section class="hero is-primary">
       <div class="hero-body">
+        <p class="image is-32x32">
+          <img src="../assets/ch-logo-180x180.png" />
+        </p>
+
         <p class="title">Catasys Results Helper :: <i>catares-help</i></p>
         <p class="subtitle">
           An ad-hoc results compilation system! Made with &#128151; by 0x4b656e.
@@ -112,7 +116,7 @@ export default {
         props: { repos: this.repos, selectedYear: this.selectedYear },
         hasModalCard: true,
         events: {
-          'store-db': () => this.storeDb()
+          'store-progs': () => this.storeProgs()
         }
       })
     },
@@ -123,7 +127,7 @@ export default {
         props: { gradeList: this.gradeList, selectedYear: this.selectedYear },
         hasModalCard: true,
         events: {
-          'store-db': () => this.storeDb()
+          'store-gradeslist': () => this.storeDb()
         }
       })
     },
@@ -148,11 +152,11 @@ export default {
       }
 
     },
-    async storeDb() {
-      await postProgs(this.selectedProg.toLowerCase(), this.repos)
-      if (this.gradeList) {
-        await postGrades(this.gradeList)
-      }
+    storeProgs() {
+      postProgs(this.selectedProg.toLowerCase(), this.repos)
+    },
+    storeGradesList() {
+      if (this.gradeList) postGrades(this.gradeList)
     },
     showTop(val) {
       this.displayTop = val
@@ -164,5 +168,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+.image.is-32x32 {
+  margin-left: -3px;
+}
 </style>

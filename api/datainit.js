@@ -52,5 +52,17 @@ module.exports = {
     'QUSNPT',
     'QUSHFT',
     'QUSHPT',
-  ]
+  ],
+
+  // getProgs() {
+  //   let progs = []
+
+  //   fs.readdir(path.resolve(__dirname, './data/'), await function (err, files) {
+  //     files.forEach(file => {
+  //       if (!['grades', 'results'].some(item => file.indexOf(item) > -1)) {
+  //         progs.push(file.toUpperCase().split('-')[1].split('.')[0])
+  //       }
+  //     })
+  //   })  
+  // }
 }

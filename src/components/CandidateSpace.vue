@@ -23,7 +23,7 @@
         icon-left="arrow-down"
         type="is-primary is-rounded"
         style="margin-top: 10px"
-        >Save Work & Hide Space</b-button
+        >{{ tableUpdated ? "Save Work &" : "" }} Hide Space</b-button
       >
     </div>
     <template v-if="courseList.length && !displayTop">
@@ -302,7 +302,8 @@ export default {
       bypassGradeYear: '',
       candidate: '',
       passGrade: null,
-      passedCarryovers: []
+      passedCarryovers: [],
+      tableUpdated: false
     }
   },
   methods: {
@@ -316,6 +317,7 @@ export default {
     },
     addToTable() {
       if (!this.dataset) return
+
       let group = this.data.find(({ description }) => description === this.dataset)
 
       if (group === undefined) {
@@ -345,6 +347,8 @@ export default {
       })
 
       this.data.push(group)
+
+      this.tableUpdated = true
     },
     async changeGrade(obj, upwards = true) {
       const gradeList = this.gradeList[this.bypassGradeYear ? this.bypassGradeYear : this.dataset.split('_')[0]]
@@ -371,6 +375,7 @@ export default {
           dataset.gradePoints += row.gradePoints
         })
 
+        this.tableUpdated = true
       } else {
         this.$buefy.toast.open({
           duration: 5000,
@@ -425,7 +430,8 @@ export default {
       return passedRetake
     },
     async saveWork() {
-      await postResults(this.candidate, this.data)
+      if (this.tableUpdated)
+        await postResults(this.candidate, this.data)
     }
   }
 }

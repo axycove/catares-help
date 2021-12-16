@@ -154,7 +154,7 @@ export default {
       }
       this.$refs.codeTextbox.focus()
 
-      this.$emit('store-db')
+      this.$emit('store-progs')
     },
     deleteRows() {
       const data = this.repos.courseList[this.selectedYear].data
@@ -162,7 +162,7 @@ export default {
         data.splice(data.indexOf(row), 1)
       })
 
-      this.$emit('store-db')
+      this.$emit('store-progs')
     }
   }
 }

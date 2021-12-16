@@ -145,13 +145,15 @@ export default {
       }
       this.$refs.gradeTextbox.focus()
 
-      this.$emit('store-db') // this.$parent.$options.parent.storeDb()
+      this.$emit('store-gradeslist')
     },
     deleteRows() {
       const data = this.gradeList[this.selectedYear].data
       this.checkedRows.forEach(row => {
         data.splice(data.indexOf(row), 1)
       })
+
+      this.$emit('store-gradeslist')
     }
   },
   created() {
