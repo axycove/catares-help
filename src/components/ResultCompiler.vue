@@ -3,7 +3,7 @@
     <section class="hero is-primary">
       <div class="hero-body">
         <p class="image is-32x32">
-          <img src="../assets/ch-logo-180x180.png" />
+          <img src="../assets/ch-logo-64x64.png" />
         </p>
 
         <p class="title">Catasys Results Helper :: <i>catares-help</i></p>
