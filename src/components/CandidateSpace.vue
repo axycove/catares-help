@@ -202,8 +202,8 @@
             </b-table>
           </b-field>
         </div>
-        <div class="content is-summary has-text-grey-dark has-background-primary-light has-text-centered">
-          <p class="heading is-italic">SUMMARY</p>
+        <div class="content is-summary has-text-danger-light">
+          <p class="heading is-italic has-text-grey-dark has-background-primary-light has-text-centered">SUMMARY</p>
           <p class="detail">
             CTGP : <b>{{ totals.totalgradepoints }}</b>
             <br />
