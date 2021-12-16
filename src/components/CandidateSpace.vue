@@ -202,7 +202,7 @@
             </b-table>
           </b-field>
         </div>
-        <div class="content is-summary has-text-danger-light">
+        <div class="content is-summary has-text-grey-dark has-background-primary-light has-text-centered">
           <p class="heading is-italic">SUMMARY</p>
           <p class="detail">
             CTGP : <b>{{ totals.totalgradepoints }}</b>
@@ -212,7 +212,7 @@
             CGPA : <b>{{ fmtNum(totals.CGPA) }}</b>
           </p>
           <template v-if="collatedCarryovers.length">
-            <p class="heading is-italic has-text-danger">CARRY OVERS</p>
+            <p class="heading is-italic has-background-danger has-text-centered">CARRY OVERS</p>
             <p class="detail">{{ collatedCarryovers }}</p>
           </template>
         </div>
