@@ -11,7 +11,7 @@
       <hr />
     </template>
     <p class="content cand-info" v-show="!displayTop">
-      <span class="has-text-grey-darker">{{ dispayName }}</span>
+      <span>{{ dispayName }}</span>
     </p>
     <div class="block">
       <b-button
@@ -203,7 +203,15 @@
           </b-field>
         </div>
         <div class="content is-summary has-text-danger-light">
-          <p class="heading is-italic has-text-grey-dark has-background-primary-light has-text-centered">SUMMARY</p>
+          <p
+            class="
+              heading
+              is-italic
+              has-text-grey-dark has-background-primary-light has-text-centered
+            "
+          >
+            SUMMARY
+          </p>
           <p class="detail">
             CTGP : <b>{{ totals.totalgradepoints }}</b>
             <br />
@@ -212,7 +220,11 @@
             CGPA : <b>{{ fmtNum(totals.CGPA) }}</b>
           </p>
           <template v-if="collatedCarryovers.length">
-            <p class="heading is-italic has-background-danger has-text-centered">CARRY OVERS</p>
+            <p
+              class="heading is-italic has-background-danger has-text-centered"
+            >
+              CARRY OVERS
+            </p>
             <p class="detail">{{ collatedCarryovers }}</p>
           </template>
         </div>
@@ -466,9 +478,15 @@ export default {
   float: right;
   margin-top: 20px;
   position: absolute;
-  right: 1.5rem;
+  right: 1.2rem;
   font-size: 1.2rem;
   font-weight: bold;
+}
+
+.content.cand-info span {
+  border: 1px solid #ddd;
+  padding: 2px 6px;
+  border-radius: 3px;
 }
 
 td .field.is-grouped {
