@@ -171,5 +171,6 @@ export default {
 <style>
 .image.is-32x32 {
   margin-left: -3px;
+  top: -20px;
 }
 </style>

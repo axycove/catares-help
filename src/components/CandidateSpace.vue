@@ -11,7 +11,7 @@
       <hr />
     </template>
     <p class="content cand-info" v-show="!displayTop">
-      <span>{{ dispayName }}</span>
+      <span class="has-text-grey-darker">{{ dispayName }}</span>
     </p>
     <div class="block">
       <b-button
@@ -44,6 +44,10 @@
                 {{ option.code + " : " + option.title }}
               </option>
             </b-select>
+          </b-field>
+
+          <!-- <hr> -->
+          <b-field grouped group-multiline>
             <b-field>
               <b-button
                 type="is-primary"
@@ -73,6 +77,8 @@
               </option>
             </b-select>
           </b-field>
+
+          <!-- </b-field> -->
           <b-field label="Grade List Bypass">
             <div class="block">
               <b-radio
@@ -196,7 +202,7 @@
             </b-table>
           </b-field>
         </div>
-        <div class="content is-summary">
+        <div class="content is-summary has-text-danger-light">
           <p class="heading is-italic">SUMMARY</p>
           <p class="detail">
             CTGP : <b>{{ totals.totalgradepoints }}</b>
@@ -206,7 +212,7 @@
             CGPA : <b>{{ fmtNum(totals.CGPA) }}</b>
           </p>
           <template v-if="collatedCarryovers.length">
-            <p class="heading is-italic" style="color: #f14668">CARRY OVERS</p>
+            <p class="heading is-italic has-text-danger-dark">CARRY OVERS</p>
             <p class="detail">{{ collatedCarryovers }}</p>
           </template>
         </div>
@@ -443,10 +449,9 @@ export default {
   padding: 10px;
   border-radius: 5px;
   height: max-content;
-  /* color: crimson; */
   margin-left: 10px;
-  background: lavender;
-  box-shadow: 3px 3px #ca91d2;
+  background: #7957d5;
+  box-shadow: 2px 2px #d9d9d9;
   width: 10rem;
   padding: 0.5rem 0.8rem;
 }
@@ -482,6 +487,10 @@ td .field.is-grouped {
   .content.cand-info {
     position: inherit;
   }
+
+  .select select[multiple] option {
+    min-width: 88vw;
+  }
 }
 
 @media only screen and (max-width: 915px) {
@@ -502,12 +511,7 @@ td .field.is-grouped {
   .content.is-summary {
     margin-left: 0;
     margin-top: 1em;
-    width: 100%;
-  }
-
-  .content.is-summary .detail {
-    display: flex;
-    justify-content: space-between;
+    width: 25vw;
   }
 
   .field .block {

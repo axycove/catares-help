@@ -3,7 +3,7 @@ const app = express();
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
-const { options, getCandidateList, progs } = require('./datainit')
+const { options, getCandidateList, getProgs } = require('./datainit')
 
 app.use(cors(options));
 app.use(express.json());
@@ -74,7 +74,8 @@ app.post('/api/results/:candidate', function (req, res) {
 });
 
 
-app.get('/api/progs/:code', function (req, res) {
+app.get('/api/progs/:code', async function (req, res) {
+  const progs = await getProgs()
   if (progs.some(p => p.toLowerCase() === req.params.code)) {
     fs.readFile(path.resolve(__dirname, `./data/catares-${req.params.code.toLowerCase()}.json`), function (err, data) {
       if (err) {
@@ -89,7 +90,8 @@ app.get('/api/progs/:code', function (req, res) {
 
 });
 
-app.post('/api/progs/:code', function (req, res) {
+app.post('/api/progs/:code', async function (req, res) {
+  const progs = await getProgs()
   if (progs.some(p => p.toLowerCase() === req.params.code)) {
     fs.writeFile(path.resolve(__dirname, `./data/catares-${req.params.code.toLowerCase()}.json`), JSON.stringify(req.body), function (err, data) {
       if (err) {

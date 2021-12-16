@@ -37,32 +37,22 @@ module.exports = {
 
   },
 
-  progs: [
-    'ABENFT',
-    'ABEHFT',
-    'ACCNFT',
-    'ACCNPT',
-    'ACCHFT',
-    'ACCHPT',
-    'CEGNFT',
-    'CEGHFT',
-    'EEENFT',
-    'EEEHFT',
-    'QUSNFT',
-    'QUSNPT',
-    'QUSHFT',
-    'QUSHPT',
-  ],
+  getProgs: function () {
+    return new Promise(function (resolve, reject) {
+      let progs = []
+      fs.readdir(path.resolve(__dirname, './data/'), function (err, files) {
+        if (err) {
+          reject(err)
+        } else {
+          files.map(file => {
+            if (!['grades', 'results'].some(item => file.indexOf(item) > -1)) {
+              progs.push(file.toUpperCase().split('-')[1].split('.')[0])
+            }
+          })
+          resolve(progs)
+        }
+      })
+    })
+  }
 
-  // getProgs() {
-  //   let progs = []
-
-  //   fs.readdir(path.resolve(__dirname, './data/'), await function (err, files) {
-  //     files.forEach(file => {
-  //       if (!['grades', 'results'].some(item => file.indexOf(item) > -1)) {
-  //         progs.push(file.toUpperCase().split('-')[1].split('.')[0])
-  //       }
-  //     })
-  //   })  
-  // }
 }
