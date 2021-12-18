@@ -152,6 +152,7 @@ export default {
       this.checkedRows.forEach(row => {
         data.splice(data.indexOf(row), 1)
       })
+      this.checkedRows = []
 
       this.$emit('store-gradeslist')
     }

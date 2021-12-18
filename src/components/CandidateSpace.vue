@@ -463,7 +463,8 @@ export default {
   height: max-content;
   margin-left: 10px;
   background: #7957d5;
-  box-shadow: 2px 2px #d9d9d9;
+  box-shadow: 2px 2px #595656;
+  max-width: 15rem;
   min-width: 10rem;
   padding: 0.5rem 0.8rem;
 }

@@ -95,7 +95,6 @@ export default {
         { code: 'QUSNPT', title: 'Quantity Surveying ND Parttime' },
         { code: 'QUSHFT', title: 'Quantity Surveying HND Fulltime' },
         { code: 'QUSHPT', title: 'Quantity Surveying HND Parttime' },
-
       ],
       selectedYear: 0,
       selectedProg: '',
@@ -127,7 +126,7 @@ export default {
         props: { gradeList: this.gradeList, selectedYear: this.selectedYear },
         hasModalCard: true,
         events: {
-          'store-gradeslist': () => this.storeDb()
+          'store-gradeslist': () => this.storeGradesList()
         }
       })
     },
@@ -139,7 +138,7 @@ export default {
         await getProgs(this.selectedProg.toLowerCase())
           .then(data => this.repos = data)
 
-        if (!('courseList' in this.repos)) {
+        if (!('courseList' in this.repos && this.repos['courseList']['courseList'])) {
           this.repos['courseList'] = {
             [this.selectedYear]: { data: [] }
           }
@@ -147,10 +146,8 @@ export default {
           if (!(this.selectedYear in this.gradeList)) {
             this.gradeList[this.selectedYear] = { data: [] }
           }
-
         }
       }
-
     },
     storeProgs() {
       postProgs(this.selectedProg.toLowerCase(), this.repos)
