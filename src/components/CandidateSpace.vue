@@ -11,7 +11,7 @@
       <hr />
     </template>
     <p class="content cand-info" v-show="!displayTop">
-      <span>{{ dispayName }}</span>
+      <span class="has-text-grey-dark has-background-light">{{ dispayName }}</span>
     </p>
     <div class="block">
       <b-button
@@ -488,6 +488,9 @@ export default {
   border: 1px solid #ddd;
   padding: 2px 6px;
   border-radius: 3px;
+  position: relative;
+  top: -10px;
+  display: block;
 }
 
 td .field.is-grouped {
