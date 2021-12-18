@@ -79,7 +79,7 @@
           </b-field>
 
           <!-- </b-field> -->
-          <b-field label="Grade List Bypass">
+          <b-field label="Grade Scheme Bypass">
             <div class="block">
               <b-radio
                 v-model="bypassGradeYear"
