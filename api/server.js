@@ -77,7 +77,7 @@ app.post('/api/results/:candidate', function (req, res) {
 app.get('/api/progs/:code', async function (req, res) {
   const progs = await getProgs()
   if (progs.some(p => p.toLowerCase() === req.params.code)) {
-    fs.readFile(path.resolve(__dirname, `./data/catares-${req.params.code.toLowerCase()}.json`), function (err, data) {
+    fs.readFile(path.resolve(__dirname, `./data/catares-${req.params.code}.json`), function (err, data) {
       if (err) {
         res.send({});
         return;
@@ -93,7 +93,7 @@ app.get('/api/progs/:code', async function (req, res) {
 app.post('/api/progs/:code', async function (req, res) {
   const progs = await getProgs()
   if (progs.some(p => p.toLowerCase() === req.params.code)) {
-    fs.writeFile(path.resolve(__dirname, `./data/catares-${req.params.code.toLowerCase()}.json`), JSON.stringify(req.body), function (err, data) {
+    fs.writeFile(path.resolve(__dirname, `./data/catares-${req.params.code}.json`), JSON.stringify(req.body), function (err, data) {
       if (err) {
         res.send('');
       }

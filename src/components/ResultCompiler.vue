@@ -138,7 +138,7 @@ export default {
         await getProgs(this.selectedProg.toLowerCase())
           .then(data => this.repos = data)
 
-        if (!('courseList' in this.repos && this.repos['courseList']['courseList'])) {
+        if (!('courseList' in this.repos && this.repos['courseList'][this.selectedYear])) {
           this.repos['courseList'] = {
             [this.selectedYear]: { data: [] }
           }
