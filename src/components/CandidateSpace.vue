@@ -365,7 +365,7 @@ export default {
       })
 
       this.data.push(group)
-
+      this.selectedCourses = []
       this.tableUpdated = true
     },
     async changeGrade(obj, upwards = true) {
