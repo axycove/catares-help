@@ -21,7 +21,7 @@
         "
         v-if="!displayTop"
         icon-left="arrow-down"
-        type="is-primary is-rounded"
+        type="is-rounded"
         style="margin-top: 10px"
         >{{ tableUpdated ? "Save Work &" : "" }} Hide Space</b-button
       >
