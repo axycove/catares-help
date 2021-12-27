@@ -44,10 +44,10 @@
         </b-select>
       </b-field>
       <div class="buttons">
-        <b-button class="is-primary" icon-left="plus" @click="addCourseDialog"
+        <b-button class="is-primary is-rounded" icon-left="plus" @click="addCourseDialog"
           >Add Courses</b-button
         >
-        <b-button class="is-danger" icon-left="plus" @click="addGradeDialog"
+        <b-button class="is-danger is-rounded" icon-left="plus" @click="addGradeDialog"
           >Add Grades</b-button
         >
       </div>

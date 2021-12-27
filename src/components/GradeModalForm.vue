@@ -9,7 +9,7 @@
       <b-field grouped group-multiline>
         <b-button
           label="Delete checked"
-          type="is-danger"
+          type="is-danger is-rounded"
           icon-left="close"
           class="field"
           @click="deleteRows"
@@ -53,13 +53,13 @@
                 {{ option }}
               </option>
             </b-select>
-            <b-button @click="saveGrade" icon-left="check" type="is-primary">Add</b-button>
+            <b-button @click="saveGrade" icon-left="check" type="is-primar is-rounded">Add</b-button>
           </b-field>
         </b-tab-item>
       </b-tabs>
     </section>
     <footer class="modal-card-foot">
-      <button class="button" type="button" @click="$parent.close()">
+      <button class="button is-rounded" type="button" @click="$parent.close()">
         Close
       </button>
     </footer>
