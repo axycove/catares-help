@@ -1,0 +1,236 @@
+{
+  "courseList": {
+    "2018": {
+      "data": [
+        {
+          "id": 1,
+          "code": "ABE311",
+          "title": "Land Clearing & Development",
+          "credits": 2
+        },
+        {
+          "id": 2,
+          "code": "ABE312",
+          "title": "Soil Mechanics",
+          "credits": 2
+        },
+        {
+          "id": 3,
+          "code": "ABE316",
+          "title": "Theory of Structures",
+          "credits": 2
+        },
+        {
+          "id": 4,
+          "code": "ABP311",
+          "title": "Agricultural Machine Drawing",
+          "credits": 3
+        },
+        {
+          "id": 5,
+          "code": "ABP312",
+          "title": "Heat Engines",
+          "credits": 2
+        },
+        {
+          "id": 6,
+          "code": "GIT201",
+          "title": "Elements of Geo-Information",
+          "credits": 2
+        },
+        {
+          "id": 7,
+          "code": "GNS301",
+          "title": "Communication in English III",
+          "credits": 2
+        },
+        {
+          "id": 8,
+          "code": "MEP322",
+          "title": "Safety",
+          "credits": 2
+        },
+        {
+          "id": 9,
+          "code": "MTH311",
+          "title": "Advanced Calculus",
+          "credits": 2
+        },
+        {
+          "id": 10,
+          "code": "MTH312",
+          "title": "Advanced Algebra",
+          "credits": 2
+        },
+        {
+          "id": 11,
+          "code": "ABE313",
+          "title": "Land Law",
+          "credits": 2
+        },
+        {
+          "id": 12,
+          "code": "ABE314",
+          "title": "Instrumentation",
+          "credits": 2
+        },
+        {
+          "id": 13,
+          "code": "ABE315",
+          "title": "Rural Electrification",
+          "credits": 2
+        },
+        {
+          "id": 14,
+          "code": "ABE317",
+          "title": "Principles of Survey & Farm Building",
+          "credits": 3
+        },
+        {
+          "id": 15,
+          "code": "ABP321",
+          "title": "Farm Tractor System Operations & Maintenance",
+          "credits": 3
+        },
+        {
+          "id": 16,
+          "code": "ABP322",
+          "title": "Tillage & Planting Machinery",
+          "credits": 2
+        },
+        {
+          "id": 17,
+          "code": "ABP323",
+          "title": "Engineering Properties of Biological Materials",
+          "credits": 2
+        },
+        {
+          "id": 18,
+          "code": "ABP325",
+          "title": "Computer Application I",
+          "credits": 2
+        },
+        {
+          "id": 19,
+          "code": "MTH313",
+          "title": "Statistical Methods in Engineering",
+          "credits": 2
+        },
+        {
+          "id": 20,
+          "code": "ABP401",
+          "title": "Technical Report Writing",
+          "credits": 2
+        },
+        {
+          "id": 21,
+          "code": "ABP431",
+          "title": "Crop Protection & Harvest Machinery",
+          "credits": 3
+        },
+        {
+          "id": 22,
+          "code": "ABP432",
+          "title": "Farm Workshop Orginization Management",
+          "credits": 2
+        },
+        {
+          "id": 23,
+          "code": "ABP433",
+          "title": "Crop Processing & Hand. Mach.",
+          "credits": 3
+        },
+        {
+          "id": 24,
+          "code": "ABP434",
+          "title": "Farm Machinery Design & Construction",
+          "credits": 2
+        },
+        {
+          "id": 25,
+          "code": "ABP435",
+          "title": "Farm Waste Management",
+          "credits": 3
+        },
+        {
+          "id": 26,
+          "code": "AEM426",
+          "title": "Rural Sociology",
+          "credits": 2
+        },
+        {
+          "id": 27,
+          "code": "AGR302",
+          "title": "Field Experiments & Data Analysis",
+          "credits": 2
+        },
+        {
+          "id": 28,
+          "code": "APT311",
+          "title": "Livestock Farm Mechanization",
+          "credits": 3
+        },
+        {
+          "id": 29,
+          "code": "CPT313",
+          "title": "Agricultural Climatology",
+          "credits": 2
+        },
+        {
+          "id": 30,
+          "code": "EED413",
+          "title": "Practise of Entrepreneurship",
+          "credits": 2
+        },
+        {
+          "id": 31,
+          "code": "GNS401",
+          "title": "Communication in English",
+          "credits": 2
+        },
+        {
+          "id": 32,
+          "code": "ABE446",
+          "title": "Agricultural Engineering in Development",
+          "credits": 2
+        },
+        {
+          "id": 33,
+          "code": "ABP441",
+          "title": "Tractors & Their Power Units",
+          "credits": 2
+        },
+        {
+          "id": 34,
+          "code": "ABP442",
+          "title": "Farm Power & Machinery Management",
+          "credits": 2
+        },
+        {
+          "id": 35,
+          "code": "ABP443",
+          "title": "Crop Drying & Storage",
+          "credits": 3
+        },
+        {
+          "id": 36,
+          "code": "ABP444",
+          "title": "Seminar",
+          "credits": 1
+        },
+        {
+          "id": 37,
+          "code": "ABP445",
+          "title": "Practical Project",
+          "credits": 6
+        },
+        {
+          "id": 38,
+          "code": "AGR402",
+          "title": "Agricultural Personnel Management",
+          "credits": 2
+        }
+      ]
+    }
+  }
+}
