@@ -56,7 +56,7 @@
                 {{ option }}
               </option>
             </b-select>
-            <b-button @click="saveCourse" type="is-primary is-rounded" icon-left="check">Add</b-button>
+            <b-button @click="saveCourse" type="is-primary" icon-left="check">Add</b-button>
           </b-field>
         </b-tab-item>
       </b-tabs>
