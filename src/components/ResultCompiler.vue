@@ -44,10 +44,18 @@
         </b-select>
       </b-field>
       <div class="buttons">
-        <b-button class="is-primary is-rounded" icon-left="plus" @click="addCourseDialog"
+        <b-button
+          class="is-primary is-rounded"
+          :disabled="isLoading"
+          icon-left="plus"
+          @click="addCourseDialog"
           >Add Courses</b-button
         >
-        <b-button class="is-danger is-rounded" icon-left="plus" @click="addGradeDialog"
+        <b-button
+          class="is-danger is-rounded"
+          :disabled="isLoading"
+          icon-left="plus"
+          @click="addGradeDialog"
           >Add Grades</b-button
         >
       </div>
@@ -99,6 +107,7 @@ export default {
       selectedYear: 0,
       selectedProg: '',
       displayTop: true,
+      isLoading: false
     }
   },
   methods: {
@@ -132,6 +141,7 @@ export default {
     },
     async initDb() {
       if (this.selectedYear && this.selectedProg) {
+        this.isLoading = true
         await getGrades()
           .then(data => this.gradeList = data)
 
@@ -147,6 +157,7 @@ export default {
             this.gradeList[this.selectedYear] = { data: [] }
           }
         }
+        this.isLoading = false
       }
     },
     storeProgs() {
