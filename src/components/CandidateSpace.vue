@@ -397,7 +397,7 @@ export default {
       } else {
         this.$buefy.toast.open({
           duration: 5000,
-          message: `You've not created a grades list for the year ${this.dataset.split('_')[0]}, or bypass.`,
+          message: `You've not created a grades scheme for the year ${this.dataset.split('_')[0]}, or bypass.`,
           position: 'is-bottom',
           type: 'is-danger'
         })
