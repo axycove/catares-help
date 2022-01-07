@@ -4,7 +4,7 @@
 
 ## Tech stack
 - Backend: Node.js server
-- Frontend: Vue.js, Webpack.js, Javascript.js ES6
+- Frontend: Vue.js, Webpack.js, Javascript.js ES6, Buefy (Styling)
 - Hosting: Amazon AWS EC2 instance.
 
 Demo: http://ec2-3-140-49-1.us-east-2.compute.amazonaws.com/
