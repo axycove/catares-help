@@ -1,9 +1,11 @@
 # catares-help
 
-This is a side-project I did for fun to help as an ad-hoc grading system. It allows for customized entries of grades, courses and then computes to display the academic stand of the active candidate; listing grade point summaries and carry overs, if any.
+>This is a side-project I did for fun to help as an ad-hoc grading system. It allows for customized entries of grades, courses and then computes to display the academic stand of the active candidate; listing grade point summaries and carry overs, if any.
 
-Backend: Node.js server
-Frontend: Vue.js, Webpack.js, Javascript.js ES6
+## Tech stack
+- Backend: Node.js server
+- Frontend: Vue.js, Webpack.js, Javascript.js ES6
+- Hosting: Amazon AWS EC2 instance.
 
 Demo: http://ec2-3-140-49-1.us-east-2.compute.amazonaws.com/
 
