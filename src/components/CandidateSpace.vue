@@ -89,7 +89,7 @@
                 :native-value="gy"
                 :key="gy"
                 v-for="gy in gradeYears"
-                v-on="passGrade ? updateTotals() : false"
+                @click="if (passGrade) updateTotals()"
               >
                 {{ gy }}
               </b-radio>
