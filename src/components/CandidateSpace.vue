@@ -89,6 +89,7 @@
                 :native-value="gy"
                 :key="gy"
                 v-for="gy in gradeYears"
+                v-on="passGrade ? updateTotals() : false"
               >
                 {{ gy }}
               </b-radio>
@@ -283,6 +284,7 @@ export default {
           }
         })
       })
+      if (this.data.length) this.updateTotals()
       return carryovers.join(', ')
     }
   },
@@ -367,8 +369,7 @@ export default {
       })
 
       this.data.push(group)
-      const recentGroup = this.data[this.data.length - 1]
-      this.updateTotals(recentGroup.items[recentGroup.items.length - 1])
+      this.updateTotals()
       this.sortDatasets()
       this.selectedCourses = []
       this.tableUpdated = true
@@ -389,7 +390,7 @@ export default {
         obj.points = newGrade.points
         obj.gradePoints = newGrade.points * obj.credits
 
-        this.updateTotals(obj)
+        this.updateTotals()
 
         this.tableUpdated = true
       } else {
@@ -452,7 +453,9 @@ export default {
     sortDatasets() {
       this.data = [...this.data.sort((g1, g2) => g1.description > g2.description)]
     },
-    updateTotals(obj) {
+    updateTotals() {
+      const recentGroup = this.data[this.data.length - 1]
+      const obj = recentGroup.items[recentGroup.items.length - 1]
       const dataset = this.data.find(d => d.description === obj.code.split('_').splice(-2, 2).join('_'))
       dataset.credits = dataset.points = dataset.gradePoints = 0
       dataset.items.forEach(row => {
