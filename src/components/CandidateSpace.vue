@@ -11,7 +11,9 @@
       <hr />
     </template>
     <p class="content cand-info" v-show="!displayTop">
-      <span class="has-text-grey-dark has-background-light">{{ dispayName }}</span>
+      <span class="has-text-grey-dark has-background-light">{{
+        dispayName
+      }}</span>
     </p>
     <div class="block">
       <b-button
@@ -365,6 +367,9 @@ export default {
       })
 
       this.data.push(group)
+      const recentGroup = this.data[this.data.length - 1]
+      this.updateTotals(recentGroup.items[recentGroup.items.length - 1])
+      this.sortDatasets()
       this.selectedCourses = []
       this.tableUpdated = true
     },
@@ -384,14 +389,7 @@ export default {
         obj.points = newGrade.points
         obj.gradePoints = newGrade.points * obj.credits
 
-        // update totals
-        const dataset = this.data.find(d => d.description == obj.code.split('_').splice(-2, 2).join('_'))
-        dataset.credits = dataset.points = dataset.gradePoints = 0
-        dataset.items.forEach(row => {
-          dataset.credits += row.credits
-          dataset.points += row.points
-          dataset.gradePoints += row.gradePoints
-        })
+        this.updateTotals(obj)
 
         this.tableUpdated = true
       } else {
@@ -428,8 +426,8 @@ export default {
         .then(data => results = data)
       if (results && cand) {
         this.data = results ? results : []
+        this.sortDatasets()
       }
-
       this.$buefy.toast.open({
         duration: 5000,
         type: 'is-success',
@@ -450,6 +448,18 @@ export default {
     async saveWork() {
       if (this.tableUpdated)
         await postResults(this.candidate, this.data)
+    },
+    sortDatasets() {
+      this.data = [...this.data.sort((g1, g2) => g1.description > g2.description)]
+    },
+    updateTotals(obj) {
+      const dataset = this.data.find(d => d.description === obj.code.split('_').splice(-2, 2).join('_'))
+      dataset.credits = dataset.points = dataset.gradePoints = 0
+      dataset.items.forEach(row => {
+        dataset.credits += row.credits
+        dataset.points += row.points
+        dataset.gradePoints += row.gradePoints
+      })
     }
   }
 }
