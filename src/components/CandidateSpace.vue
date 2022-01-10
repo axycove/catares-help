@@ -389,7 +389,7 @@ export default {
         obj.points = newGrade.points
         obj.gradePoints = newGrade.points * obj.credits
 
-        this.updateTotals()
+        this.updateTotals(obj)
 
         this.tableUpdated = true
       } else {
@@ -452,10 +452,10 @@ export default {
     sortDatasets() {
       this.data = [...this.data.sort((g1, g2) => g1.description > g2.description)]
     },
-    updateTotals() {
+    updateTotals(obj) {
       const recentGroup = this.data[this.data.length - 1]
-      const obj = recentGroup.items[recentGroup.items.length - 1]
-      const dataset = this.data.find(d => d.description === obj.code.split('_').splice(-2, 2).join('_'))
+      const localObj = obj ?? recentGroup.items[recentGroup.items.length - 1]
+      const dataset = this.data.find(d => d.description === localObj.code.split('_').splice(-2, 2).join('_'))
       dataset.credits = dataset.points = dataset.gradePoints = 0
       dataset.items.forEach(row => {
         dataset.credits += row.credits
