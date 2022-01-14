@@ -22,7 +22,7 @@
           saveWork();
         "
         v-if="!displayTop"
-        icon-left="arrow-down"
+        icon-left="eye-off"
         type="is-rounded"
         style="margin-top: 10px"
         >{{ tableUpdated ? "Save Work &" : "" }} Hide Space</b-button
@@ -53,7 +53,7 @@
             <b-field>
               <b-button
                 type="is-primary is-rounded"
-                icon-left="check-outline"
+                icon-left="arrow-collapse-right"
                 @click="addToTable"
                 >Add to Table</b-button
               >
@@ -79,8 +79,6 @@
               </option>
             </b-select>
           </b-field>
-
-          <!-- </b-field> -->
           <b-field label="Grade Scheme Bypass">
             <div class="block">
               <b-radio
@@ -453,9 +451,9 @@ export default {
       this.data = [...this.data.sort((g1, g2) => g1.description > g2.description)]
     },
     updateTotals(obj) {
-      const recentGroup = this.data[this.data.length - 1]
-      const localObj = obj ?? recentGroup.items[recentGroup.items.length - 1]
-      const dataset = this.data.find(d => d.description === localObj.code.split('_').splice(-2, 2).join('_'))
+      const current = this.data[this.data.length - 1]
+      const newObj = obj ?? current.items[current.items.length - 1]
+      const dataset = this.data.find(d => d.description === newObj.code.split('_').splice(-2, 2).join('_'))
       dataset.credits = dataset.points = dataset.gradePoints = 0
       dataset.items.forEach(row => {
         dataset.credits += row.credits

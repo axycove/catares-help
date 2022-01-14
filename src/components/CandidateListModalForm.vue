@@ -24,7 +24,7 @@
               field="name"
               label="Candidate's name"
               v-slot="props"
-              >{{ props.row.name.split('$')[0] }}</b-table-column
+              >{{ props.row.name.split("$")[0] }}</b-table-column
             >
             <b-table-column
               field="datasets"
@@ -73,9 +73,9 @@
       </b-tabs>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-rounded" type="button" @click="$parent.close()">
+      <b-button icon-left="close" type="is-rounded" @click="$parent.close()">
         Close
-      </button>
+      </b-button>
     </footer>
   </div>
 </template>

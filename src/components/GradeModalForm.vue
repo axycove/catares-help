@@ -41,10 +41,7 @@
             ></b-input>
           </b-field>
           <b-field label="Points">
-            <b-select
-              placeholder="Select points..."
-              v-model="grade.points"
-            >
+            <b-select placeholder="Select points..." v-model="grade.points">
               <option
                 :value="option"
                 v-for="(option, index) in gradePoints"
@@ -53,15 +50,17 @@
                 {{ option }}
               </option>
             </b-select>
-            <b-button @click="saveGrade" icon-left="check" type="is-primary">Add</b-button>
+            <b-button @click="saveGrade" icon-left="check" type="is-primary"
+              >Add</b-button
+            >
           </b-field>
         </b-tab-item>
       </b-tabs>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-rounded" type="button" @click="$parent.close()">
+      <b-button icon-left="close" type="is-rounded" @click="$parent.close()">
         Close
-      </button>
+      </b-button>
     </footer>
   </div>
 </template>

@@ -44,10 +44,7 @@
             <b-input v-model="course.title" :title="course.title"></b-input>
           </b-field>
           <b-field label="Credits">
-            <b-select
-              placeholder="Select credits..."
-              v-model="course.credits"
-            >
+            <b-select placeholder="Select credits..." v-model="course.credits">
               <option
                 :value="option"
                 v-for="(option, index) in Array.from(Array(10).keys())"
@@ -56,15 +53,17 @@
                 {{ option }}
               </option>
             </b-select>
-            <b-button @click="saveCourse" type="is-primary" icon-left="check">Add</b-button>
+            <b-button @click="saveCourse" type="is-primary" icon-left="check"
+              >Add</b-button
+            >
           </b-field>
         </b-tab-item>
       </b-tabs>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-rounded" type="button" @click="$parent.close()">
+      <b-button icon-left="close" type="is-rounded" @click="$parent.close()">
         Close
-      </button>
+      </b-button>
     </footer>
   </div>
 </template>
