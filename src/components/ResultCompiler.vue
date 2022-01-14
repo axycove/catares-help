@@ -45,14 +45,14 @@
       </b-field>
       <div class="buttons">
         <b-button
-          class="is-primary is-rounded is-outlined"
+          class="is-primary is-rounded"
           :disabled="isLoading"
           icon-left="plus-box-multiple-outline"
           @click="addCourseDialog"
           >Add Courses</b-button
         >
         <b-button
-          class="is-danger is-rounded is-outlined"
+          class="is-danger is-rounded"
           :disabled="isLoading"
           icon-left="plus-box-multiple-outline"
           @click="addGradeDialog"

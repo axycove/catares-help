@@ -2,7 +2,7 @@
   <section class="section" style="padding-top: 0">
     <template v-if="displayTop">
       <b-button
-        type="is-outlined is-dark is-rounded"
+        type="is-dark is-rounded"
         icon-left="animation"
         @click="showCandidateListDialog"
         v-if="selectedProg && selectedYear"
