@@ -3,7 +3,7 @@
     <template v-if="displayTop">
       <b-button
         type="is-dark is-rounded"
-        icon-left="animation"
+        icon-left="account-box-multiple"
         @click="showCandidateListDialog"
         v-if="selectedProg && selectedYear"
         >Load Candidate</b-button
@@ -322,7 +322,7 @@ export default {
       candidate: '',
       passGrade: null,
       passedCarryovers: [],
-      tableUpdated: false
+      tableUpdated: false,
     }
   },
   methods: {

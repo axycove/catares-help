@@ -51,7 +51,9 @@
               </template>
             </b-table-column>
             <template #empty>
-              <div class="has-text-centered">No records</div>
+              <div class="has-text-centered">
+                {{ isLoading ? "Loading..." : "No records" }}
+              </div>
             </template>
           </b-table>
         </b-tab-item>
@@ -88,19 +90,24 @@ export default {
     selectedProg: {
       type: String,
       required: true
-    }
+    },
   },
   data() {
     return {
       checkedRows: [],
       candidate: '',
-      candidateList: []
+      candidateList: [],
+      isLoading: false,
     }
 
   },
   mounted() {
+    this.isLoading = true
     getCandidates(this.selectedProg)
-      .then(data => { this.candidateList = data })
+      .then(data => {
+        this.isLoading = false
+        this.candidateList = data
+      })
   },
   methods: {
     async initSpace(val) {
