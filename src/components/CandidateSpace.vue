@@ -47,8 +47,6 @@
               </option>
             </b-select>
           </b-field>
-
-          <!-- <hr> -->
           <b-field grouped group-multiline>
             <b-field>
               <b-button
@@ -179,14 +177,14 @@
                   <td>
                     <b-field grouped>
                       <b-button
-                        icon-left="arrow-up"
+                        icon-left="arrow-collapse-up"
                         @click="changeGrade(item)"
                         type="is-primary is-rounded"
                         size="is-small"
                         style="display: table"
                       ></b-button>
                       <b-button
-                        icon-left="arrow-down"
+                        icon-left="arrow-collapse-down"
                         @click="changeGrade(item, false)"
                         type="is-danger is-rounded"
                         size="is-small"
@@ -242,19 +240,26 @@ export default {
     dispayName() {
       return this.candidate.split('$')[0]
     },
-    datasets() {
-      const array = []
-      this.sessions.map(element => {
-        array.push(element.id + '_1')
-        array.push(element.id + '_2')
-      })
-      return array
-    },
     totals() {
-      let totalcredits = 0, totalgradepoints = 0
-      this.data.forEach(dataset => {
+      let totalcredits = 0, totalgradepoints = 0, datasetGradePoints, datasetPoints, grade = ''
+      const gradeList = this.gradeList[this.bypassGradeYear ? this.bypassGradeYear : this.dataset.split('_')[0]]
+      this.data.map(dataset => {
+        datasetGradePoints = datasetPoints = 0
+        dataset.items.map(result => {
+          grade = gradeList.data.find(item => item.letter == result.grade)
+          result.points = grade === undefined ? result.points : grade.points
+          datasetPoints += result.points
+          result.gradePoints = result.points * result.credits
+          datasetGradePoints += result.gradePoints
+        })
         totalcredits += dataset.credits
-        totalgradepoints += dataset.gradePoints
+        totalgradepoints += datasetGradePoints
+
+        /* Update grade points since a new article may have been added,
+         * or grade scheme changed, so we can see reflecting changes.
+         */
+        dataset.gradePoints = datasetGradePoints
+        dataset.points = datasetPoints
       })
       return {
         CGPA: totalgradepoints > 0 ? totalgradepoints / totalcredits : 0,
@@ -266,8 +271,8 @@ export default {
     },
     collatedCarryovers() {
       const carryovers = []
-      this.data.forEach(dataset => {
-        dataset.items.forEach(result => {
+      this.data.map(dataset => {
+        dataset.items.map(result => {
           let courseCode = result.code.split('_')[0]
           let foundIndex = carryovers.indexOf(courseCode)
           if (this.passGrade < result.grade) {
@@ -323,6 +328,7 @@ export default {
       passGrade: null,
       passedCarryovers: [],
       tableUpdated: false,
+      datasets: [],
     }
   },
   methods: {
@@ -332,6 +338,15 @@ export default {
         .then(data => repos = data)
       const parsedList = repos ? repos.courseList : null
       if (parsedList) this.courseList = parsedList[this.selectedYear].data
+
+      // Populate sessions, datasets
+      this.datasets = []
+      this.sessions.map(element => {
+        this.datasets.push(element.id + '_1')
+        this.datasets.push(element.id + '_2')
+      })
+      this.dataset = this.datasets.find(d => d.split('_')[0] == 2019)
+
       this.$emit('show-top', false)
     },
     addToTable() {
