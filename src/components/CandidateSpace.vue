@@ -213,9 +213,9 @@ export default {
       const gradeList = this.gradeList[
         this.bypassGradeYear ? this.bypassGradeYear : this.dataset.split('_')[0]
       ];
-      this.data.map((dataset) => {
+      this.data.forEach((dataset) => {
         datasetGradePoints = datasetPoints = 0;
-        dataset.items.map((result) => {
+        dataset.items.forEach((result) => {
           grade = gradeList.data.find((item) => item.letter == result.grade);
           result.points = grade === undefined ? result.points : grade.points;
           datasetPoints += result.points;
@@ -242,8 +242,8 @@ export default {
     },
     collatedCarryovers() {
       const carryovers = [];
-      this.data.map((dataset) => {
-        dataset.items.map((result) => {
+      this.data.forEach((dataset) => {
+        dataset.items.forEach((result) => {
           let courseCode = result.code.split('_')[0];
           let foundIndex = carryovers.indexOf(courseCode);
           if (this.passGrade < result.grade) {
@@ -314,7 +314,7 @@ export default {
 
       // Populate sessions, datasets
       this.datasets = [];
-      this.sessions.map((element) => {
+      this.sessions.forEach((element) => {
         this.datasets.push(element.id + '_1');
         this.datasets.push(element.id + '_2');
       });
@@ -438,7 +438,10 @@ export default {
       return passedRetake;
     },
     async saveWork() {
-      if (this.tableUpdated) await postResults(this.candidate, this.data);
+      if (this.tableUpdated) {
+        this.tableUpdated = false
+        await postResults(this.candidate, this.data);
+      }
     },
     sortDatasets() {
       this.data = [...this.data.sort((g1, g2) => g1.description > g2.description)];
