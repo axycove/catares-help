@@ -2,7 +2,7 @@
   <div class="modal-card">
     <header class="modal-card-head">
       <p class="modal-card-title">
-        {{ "Manage Course Listings for the year " + selectedYear }}
+        {{ 'Manage Course Listings for the year ' + selectedYear }}
       </p>
     </header>
     <section class="modal-card-body">
@@ -34,11 +34,7 @@
         </b-tab-item>
         <b-tab-item label="Entry">
           <b-field label="Code">
-            <b-input
-              ref="codeTextbox"
-              v-model="course.code"
-              :title="course.code"
-            ></b-input>
+            <b-input ref="codeTextbox" v-model="course.code" :title="course.code"></b-input>
           </b-field>
           <b-field label="Title">
             <b-input v-model="course.title" :title="course.title"></b-input>
@@ -53,9 +49,7 @@
                 {{ option }}
               </option>
             </b-select>
-            <b-button @click="saveCourse" type="is-primary" icon-left="check"
-              >Add</b-button
-            >
+            <b-button @click="saveCourse" type="is-primary" icon-left="check">Add</b-button>
           </b-field>
         </b-tab-item>
       </b-tabs>
@@ -73,19 +67,19 @@ export default {
   props: {
     repos: {
       type: Object,
-      required: true
+      required: true,
     },
     selectedYear: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     courseInfo() {
       if (this.course && 'code' in this.course) {
-        return `${this.course.code.trim()} : ${this.course.title.trim()}`
+        return `${this.course.code.trim()} : ${this.course.title.trim()}`;
       }
-      return ''
+      return '';
     },
   },
   data() {
@@ -94,76 +88,79 @@ export default {
       course: {
         code: '',
         title: '',
-        credits: -1
+        credits: -1,
       },
-      gradeColumns: [{
-        field: 'id',
-        label: 'ID'
-      },
-      {
-        field: 'gradeLetter',
-        label: 'Grade Letter'
-      }
+      gradeColumns: [
+        {
+          field: 'id',
+          label: 'ID',
+        },
+        {
+          field: 'gradeLetter',
+          label: 'Grade Letter',
+        },
       ],
-      courseColumns: [{
-        field: 'id',
-        label: 'ID'
-      },
-      {
-        field: 'code',
-        label: 'Code'
-      },
-      {
-        field: 'title',
-        label: 'Title'
-      },
-      {
-        field: 'credits',
-        label: 'Credits'
-      }]
-    }
+      courseColumns: [
+        {
+          field: 'id',
+          label: 'ID',
+        },
+        {
+          field: 'code',
+          label: 'Code',
+        },
+        {
+          field: 'title',
+          label: 'Title',
+        },
+        {
+          field: 'credits',
+          label: 'Credits',
+        },
+      ],
+    };
   },
   methods: {
     saveCourse() {
-      let exists = false
+      let exists = false;
 
       if (this.course.code === '' || this.course.title === '' || this.course.credits === '') {
-        this.$refs.codeTextbox.focus()
-        return
+        this.$refs.codeTextbox.focus();
+        return;
       }
 
       if (this.repos.courseList[this.selectedYear].data.length) {
-        this.repos.courseList[this.selectedYear].data.every(element => {
+        this.repos.courseList[this.selectedYear].data.every((element) => {
           if (element.code === this.course.code) {
             exists = true;
-            return false
+            return false;
           }
-        })
+        });
       }
 
       if (!exists) {
-        this.course.id = this.repos.courseList[this.selectedYear].data.length + 1
-        this.repos.courseList[this.selectedYear].data.push(this.course)
+        this.course.id = this.repos.courseList[this.selectedYear].data.length + 1;
+        this.repos.courseList[this.selectedYear].data.push(this.course);
       }
 
       this.course = {
         code: '',
         title: '',
-        credits: 0
-      }
-      this.$refs.codeTextbox.focus()
+        credits: 0,
+      };
+      this.$refs.codeTextbox.focus();
 
-      this.$emit('store-progs')
+      this.$emit('store-progs');
     },
     deleteRows() {
-      const data = this.repos.courseList[this.selectedYear].data
-      this.checkedRows.forEach(row => {
-        data.splice(data.indexOf(row), 1)
-      })
-      this.checkedRows = []
+      const data = this.repos.courseList[this.selectedYear].data;
+      this.checkedRows.forEach((row) => {
+        data.splice(data.indexOf(row), 1);
+      });
+      this.checkedRows = [];
 
-      this.$emit('store-progs')
-    }
-  }
-}
+      this.$emit('store-progs');
+    },
+  },
+};
 </script>

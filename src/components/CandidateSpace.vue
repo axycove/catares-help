@@ -11,9 +11,7 @@
       <hr />
     </template>
     <p class="content cand-info" v-show="!displayTop">
-      <span class="has-text-grey-dark has-background-light">{{
-        dispayName
-      }}</span>
+      <span class="has-text-grey-dark has-background-light">{{ dispayName }}</span>
     </p>
     <div class="block">
       <b-button
@@ -25,7 +23,7 @@
         icon-left="eye-off"
         type="is-rounded"
         style="margin-top: 10px"
-        >{{ tableUpdated ? "Save Work &" : "" }} Hide Space</b-button
+        >{{ tableUpdated ? 'Save Work &' : '' }} Hide Space</b-button
       >
     </div>
     <template v-if="courseList.length && !displayTop">
@@ -38,12 +36,8 @@
               multiple
               native-size="12"
             >
-              <option
-                :value="option"
-                v-for="option in courseList"
-                :key="option.code"
-              >
-                {{ option.code + " : " + option.title }}
+              <option :value="option" v-for="option in courseList" :key="option.code">
+                {{ option.code + ' : ' + option.title }}
               </option>
             </b-select>
           </b-field>
@@ -101,55 +95,27 @@
               hoverable
               custom-detail-row
               detail-key="description"
-              @details-open="
-                (row, index) => $buefy.toast.open(`Expanded ${row.description}`)
-              "
+              @details-open="(row, index) => $buefy.toast.open(`Expanded ${row.description}`)"
             >
-              <b-table-column
-                field="description"
-                label="Description"
-                v-slot="props"
-                width="600"
+              <b-table-column field="description" label="Description" v-slot="props" width="600"
                 ><b>{{ props.row.description }}</b></b-table-column
               >
-              <b-table-column
-                centered
-                field="grade"
-                label="Grade"
-                v-slot="props"
+              <b-table-column centered field="grade" label="Grade" v-slot="props"
                 ><b>{{ props.row.grade }}</b></b-table-column
               >
-              <b-table-column
-                centered
-                field="credits"
-                label="Credits"
-                v-slot="props"
+              <b-table-column centered field="credits" label="Credits" v-slot="props"
                 ><b>{{ props.row.credits }}</b></b-table-column
               >
-              <b-table-column
-                centered
-                field="points"
-                label="Points"
-                v-slot="props"
+              <b-table-column centered field="points" label="Points" v-slot="props"
                 ><b>{{ props.row.points }}</b></b-table-column
               >
-              <b-table-column
-                centered
-                field="gradePoints"
-                label="Grade Points"
-                v-slot="props"
+              <b-table-column centered field="gradePoints" label="Grade Points" v-slot="props"
                 ><b>{{ fmtNum(props.row.gradePoints) }}</b></b-table-column
               >
               <b-table-column centered>
                 <template v-slot:default="{ row }">
                   <b
-                    >{{
-                      `GPA: ${
-                        row.gradePoints > 0
-                          ? fmtNum(row.gradePoints / row.credits)
-                          : 0
-                      }`
-                    }}
+                    >{{ `GPA: ${row.gradePoints > 0 ? fmtNum(row.gradePoints / row.credits) : 0}` }}
                   </b>
                 </template>
               </b-table-column>
@@ -218,9 +184,7 @@
             CGPA : <b>{{ fmtNum(totals.CGPA) }}</b>
           </p>
           <template v-if="collatedCarryovers.length">
-            <p
-              class="heading is-italic has-background-danger has-text-centered"
-            >
+            <p class="heading is-italic has-background-danger has-text-centered">
               CARRY OVERS
             </p>
             <p class="detail">{{ collatedCarryovers }}</p>
@@ -232,85 +196,95 @@
 </template>
 
 <script>
-import CandidateListModalForm from './CandidateListModalForm'
-import { getResults, getProgs, postResults } from '../services/api'
+import CandidateListModalForm from './CandidateListModalForm';
+import { getResults, getProgs, postResults } from '../services/api';
 
 export default {
   computed: {
     dispayName() {
-      return this.candidate.split('$')[0]
+      return this.candidate.split('$')[0];
     },
     totals() {
-      let totalcredits = 0, totalgradepoints = 0, datasetGradePoints, datasetPoints, grade = ''
-      const gradeList = this.gradeList[this.bypassGradeYear ? this.bypassGradeYear : this.dataset.split('_')[0]]
-      this.data.map(dataset => {
-        datasetGradePoints = datasetPoints = 0
-        dataset.items.map(result => {
-          grade = gradeList.data.find(item => item.letter == result.grade)
-          result.points = grade === undefined ? result.points : grade.points
-          datasetPoints += result.points
-          result.gradePoints = result.points * result.credits
-          datasetGradePoints += result.gradePoints
-        })
-        totalcredits += dataset.credits
-        totalgradepoints += datasetGradePoints
+      let totalcredits = 0,
+        totalgradepoints = 0,
+        datasetGradePoints,
+        datasetPoints,
+        grade = '';
+      const gradeList = this.gradeList[
+        this.bypassGradeYear ? this.bypassGradeYear : this.dataset.split('_')[0]
+      ];
+      this.data.map((dataset) => {
+        datasetGradePoints = datasetPoints = 0;
+        dataset.items.map((result) => {
+          grade = gradeList.data.find((item) => item.letter == result.grade);
+          result.points = grade === undefined ? result.points : grade.points;
+          datasetPoints += result.points;
+          result.gradePoints = result.points * result.credits;
+          datasetGradePoints += result.gradePoints;
+        });
+        totalcredits += dataset.credits;
+        totalgradepoints += datasetGradePoints;
 
         /* Update grade points since a new article may have been added,
          * or grade scheme changed, so we can see reflecting changes.
          */
-        dataset.gradePoints = datasetGradePoints
-        dataset.points = datasetPoints
-      })
+        dataset.gradePoints = datasetGradePoints;
+        dataset.points = datasetPoints;
+      });
       return {
         CGPA: totalgradepoints > 0 ? totalgradepoints / totalcredits : 0,
-        totalcredits, totalgradepoints
-      }
+        totalcredits,
+        totalgradepoints,
+      };
     },
     gradeYears() {
-      return Object.keys(this.gradeList)
+      return Object.keys(this.gradeList);
     },
     collatedCarryovers() {
-      const carryovers = []
-      this.data.map(dataset => {
-        dataset.items.map(result => {
-          let courseCode = result.code.split('_')[0]
-          let foundIndex = carryovers.indexOf(courseCode)
+      const carryovers = [];
+      this.data.map((dataset) => {
+        dataset.items.map((result) => {
+          let courseCode = result.code.split('_')[0];
+          let foundIndex = carryovers.indexOf(courseCode);
           if (this.passGrade < result.grade) {
-            if (foundIndex === -1) carryovers.push(courseCode)
+            if (foundIndex === -1) carryovers.push(courseCode);
           } else if (foundIndex !== -1) {
             this.passedCarryovers.push({
               courseCode,
-              dataset: result.code.split('_').splice(1, 2).join('_')
-            })
-            carryovers.splice(foundIndex, 1)
+              dataset: result.code
+                .split('_')
+                .splice(1, 2)
+                .join('_'),
+            });
+            carryovers.splice(foundIndex, 1);
           }
-        })
-      })
-      if (this.data.length) this.updateTotals()
-      return carryovers.join(', ')
-    }
+        });
+      });
+      if (this.data.length) this.updateTotals();
+      return carryovers.join(', ');
+    },
   },
   props: {
     gradeList: {
       type: Object,
-      required: true
+      required: true,
     },
     selectedProg: {
       type: String,
-      required: true
+      required: true,
     },
     selectedYear: {
       type: Number,
-      required: true
+      required: true,
     },
     sessions: {
       type: Array,
-      required: true
+      required: true,
     },
     displayTop: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
@@ -319,7 +293,7 @@ export default {
       course: {
         code: '',
         title: '',
-        credits: -1
+        credits: -1,
       },
       dataset: null,
       selectedCourses: [],
@@ -329,93 +303,95 @@ export default {
       passedCarryovers: [],
       tableUpdated: false,
       datasets: [],
-    }
+    };
   },
   methods: {
     async initDb() {
-      let repos = null
-      await getProgs(this.selectedProg.toLowerCase())
-        .then(data => repos = data)
-      const parsedList = repos ? repos.courseList : null
-      if (parsedList) this.courseList = parsedList[this.selectedYear].data
+      let repos = null;
+      await getProgs(this.selectedProg.toLowerCase()).then((data) => (repos = data));
+      const parsedList = repos ? repos.courseList : null;
+      if (parsedList) this.courseList = parsedList[this.selectedYear].data;
 
       // Populate sessions, datasets
-      this.datasets = []
-      this.sessions.map(element => {
-        this.datasets.push(element.id + '_1')
-        this.datasets.push(element.id + '_2')
-      })
-      this.dataset = this.datasets.find(d => d.split('_')[0] == 2019)
+      this.datasets = [];
+      this.sessions.map((element) => {
+        this.datasets.push(element.id + '_1');
+        this.datasets.push(element.id + '_2');
+      });
+      this.dataset = this.datasets.find((d) => d.split('_')[0] == 2019);
 
-      this.$emit('show-top', false)
+      this.$emit('show-top', false);
     },
     addToTable() {
-      if (!this.dataset) return
+      if (!this.dataset) return;
 
-      let group = this.data.find(({ description }) => description === this.dataset)
+      let group = this.data.find(({ description }) => description === this.dataset);
 
       if (group === undefined) {
-        group = {}
-        group.items = []
-        group.description = this.dataset
-        group.credits = 0
-        group.grade = '*'
-        group.points = 0
-        group.gradePoints = 0
+        group = {};
+        group.items = [];
+        group.description = this.dataset;
+        group.credits = 0;
+        group.grade = '*';
+        group.points = 0;
+        group.gradePoints = 0;
       } else {
-        this.data.splice(this.data.indexOf(group), 1)
+        this.data.splice(this.data.indexOf(group), 1);
       }
 
-      this.selectedCourses.forEach(course => {
-        if (!group.items.find(item => item.code.split('_')[0] === course.code)) {
-          group.items.push(
-            {
-              code: course.code + '_' + this.dataset,
-              description: course.code + ' : ' + course.title,
-              credits: course.credits,
-              grade: 'F',
-              points: 0,
-              gradePoints: 0
-            })
+      this.selectedCourses.forEach((course) => {
+        if (!group.items.find((item) => item.code.split('_')[0] === course.code)) {
+          group.items.push({
+            code: course.code + '_' + this.dataset,
+            description: course.code + ' : ' + course.title,
+            credits: course.credits,
+            grade: 'F',
+            points: 0,
+            gradePoints: 0,
+          });
         }
-      })
+      });
 
-      this.data.push(group)
-      this.updateTotals()
-      this.sortDatasets()
-      this.selectedCourses = []
-      this.tableUpdated = true
+      this.data.push(group);
+      this.updateTotals();
+      this.sortDatasets();
+      this.selectedCourses = [];
+      this.tableUpdated = true;
     },
     async changeGrade(obj, upwards = true) {
-      const gradeList = this.gradeList[this.bypassGradeYear ? this.bypassGradeYear : this.dataset.split('_')[0]]
+      const gradeList = this.gradeList[
+        this.bypassGradeYear ? this.bypassGradeYear : this.dataset.split('_')[0]
+      ];
       if (gradeList) {
-        const grade = gradeList.data.find(item => item.letter === obj.grade)
-        let position = gradeList.data.indexOf(grade)
-        let newGrade
+        const grade = gradeList.data.find((item) => item.letter === obj.grade);
+        let position = gradeList.data.indexOf(grade);
+        let newGrade;
         if (upwards) {
-          newGrade = position > 0 ? gradeList.data[--position] : grade
+          newGrade = position > 0 ? gradeList.data[--position] : grade;
         } else {
-          newGrade = position != (gradeList.data.length - 1) ? gradeList.data[++position] : grade
+          newGrade = position != gradeList.data.length - 1 ? gradeList.data[++position] : grade;
         }
 
-        obj.grade = newGrade.letter
-        obj.points = newGrade.points
-        obj.gradePoints = newGrade.points * obj.credits
+        obj.grade = newGrade.letter;
+        obj.points = newGrade.points;
+        obj.gradePoints = newGrade.points * obj.credits;
 
-        this.updateTotals(obj)
+        this.updateTotals(obj);
 
-        this.tableUpdated = true
+        this.tableUpdated = true;
       } else {
         this.$buefy.toast.open({
           duration: 5000,
-          message: `You've not created a grades scheme for the year ${this.dataset.split('_')[0]}, or bypass.`,
+          message: `You've not created a grades scheme for the year ${
+            this.dataset.split('_')[0]
+          }, or bypass.`,
           position: 'is-bottom',
-          type: 'is-danger'
-        })
+          type: 'is-danger',
+        });
       }
     },
     fmtNum(value) {
-      return Number(Math.round(parseFloat(value) + 'e2') + 'e-2').toFixed(2)
+      return Number(Math.round(parseFloat(value) + 'e2') + 'e-2').toFixed(2);
     },
 
     showCandidateListDialog() {
@@ -426,58 +402,67 @@ export default {
         hasModalCard: true,
         events: {
           'init-space': (val) => {
-            this.initSpace(val)
-          }
-        }
-      })
+            this.initSpace(val);
+          },
+        },
+      });
     },
     async initSpace(cand) {
-      this.initDb()
-      this.candidate = cand
-      let results = null
-      await getResults(cand)
-        .then(data => results = data)
+      this.initDb();
+      this.candidate = cand;
+      let results = null;
+      await getResults(cand).then((data) => (results = data));
       if (results && cand) {
-        this.data = results ? results : []
-        this.sortDatasets()
+        this.data = results ? results : [];
+        this.sortDatasets();
       }
       this.$buefy.toast.open({
         duration: 5000,
         type: 'is-success',
-        message:
-          `Candidate space loaded for ${this.dispayName}.`
-      })
+        message: `Candidate space loaded for ${this.dispayName}.`,
+      });
     },
     markGoodRetake(resultRow) {
-      let passedRetake = false
-      this.passedCarryovers.forEach(pc => {
+      let passedRetake = false;
+      this.passedCarryovers.forEach((pc) => {
         if (!passedRetake) {
-          passedRetake = pc.courseCode == resultRow.code.split('_')[0] &&
-            pc.dataset == resultRow.code.split('_').splice(1, 2).join('_')
+          passedRetake =
+            pc.courseCode == resultRow.code.split('_')[0] &&
+            pc.dataset ==
+              resultRow.code
+                .split('_')
+                .splice(1, 2)
+                .join('_');
         }
-      })
-      return passedRetake
+      });
+      return passedRetake;
     },
     async saveWork() {
-      if (this.tableUpdated)
-        await postResults(this.candidate, this.data)
+      if (this.tableUpdated) await postResults(this.candidate, this.data);
     },
     sortDatasets() {
-      this.data = [...this.data.sort((g1, g2) => g1.description > g2.description)]
+      this.data = [...this.data.sort((g1, g2) => g1.description > g2.description)];
     },
     updateTotals(obj) {
-      const current = this.data[this.data.length - 1]
-      const newObj = obj ?? current.items[current.items.length - 1]
-      const dataset = this.data.find(d => d.description === newObj.code.split('_').splice(-2, 2).join('_'))
-      dataset.credits = dataset.points = dataset.gradePoints = 0
-      dataset.items.forEach(row => {
-        dataset.credits += row.credits
-        dataset.points += row.points
-        dataset.gradePoints += row.gradePoints
-      })
-    }
-  }
-}
+      const current = this.data[this.data.length - 1];
+      const newObj = obj ?? current.items[current.items.length - 1];
+      const dataset = this.data.find(
+        (d) =>
+          d.description ===
+          newObj.code
+            .split('_')
+            .splice(-2, 2)
+            .join('_')
+      );
+      dataset.credits = dataset.points = dataset.gradePoints = 0;
+      dataset.items.forEach((row) => {
+        dataset.credits += row.credits;
+        dataset.points += row.points;
+        dataset.gradePoints += row.gradePoints;
+      });
+    },
+  },
+};
 </script>
 <style>
 .content.is-summary {

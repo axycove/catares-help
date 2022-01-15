@@ -6,7 +6,9 @@
           <img src="/image/ch-logo-64x64.png" />
         </p>
 
-        <p class="title app-title">Catasys Results Helper :: <i>catares-help</i></p>
+        <p class="title app-title">
+          Catasys Results Helper :: <i>catares-help</i>
+        </p>
         <hr class="hero-divider has-background-grey-light" />
         <p class="subtitle has-text-grey-lighter is-size-6 is-italic">
           An ad-hoc results compilation system! Made with &#128151; by 0x4b656e.
@@ -73,14 +75,14 @@
 </template>
 
 <script>
-import CourseModalForm from './CourseModalForm'
-import GradeModalForm from './GradeModalForm'
-import CandidateSpace from './CandidateSpace'
-import { getGrades, postGrades, postProgs, getProgs } from '../services/api'
+import CourseModalForm from "./CourseModalForm";
+import GradeModalForm from "./GradeModalForm";
+import CandidateSpace from "./CandidateSpace";
+import { getGrades, postGrades, postProgs, getProgs } from "../services/api";
 
 export default {
   components: {
-    CandidateSpace
+    CandidateSpace,
   },
   data() {
     return {
@@ -90,32 +92,45 @@ export default {
       gradeList: {},
       sessions: [],
       programmes: [
-        { code: 'ABENFT', title: 'Agric/Bio-Environmental Engineering ND Fulltime' },
-        { code: 'ABEHFT', title: 'Agric/Bio-Environmental Engineering HND Fulltime' },
-        { code: 'ACCNFT', title: 'Accounting ND Fulltime' },
-        { code: 'ACCNPT', title: 'Accounting ND Parttime' },
-        { code: 'ACCHFT', title: 'Accounting HND Fulltime' },
-        { code: 'ACCHPT', title: 'Accounting HND Parttime' },
-        { code: 'CEGNFT', title: 'Computer Engineering ND Fulltime' },
-        { code: 'CEGHFT', title: 'Computer Engineering HND Fulltime' },
-        { code: 'EEENFT', title: 'Electrical/Electronics Engineering ND Fulltime' },
-        { code: 'EEEHFT', title: 'Electrical/Electronics Engineering HND Fulltime' },
-        { code: 'QUSNFT', title: 'Quantity Surveying ND Fulltime' },
-        { code: 'QUSNPT', title: 'Quantity Surveying ND Parttime' },
-        { code: 'QUSHFT', title: 'Quantity Surveying HND Fulltime' },
-        { code: 'QUSHPT', title: 'Quantity Surveying HND Parttime' },
+        {
+          code: "ABENFT",
+          title: "Agric/Bio-Environmental Engineering ND Fulltime",
+        },
+        {
+          code: "ABEHFT",
+          title: "Agric/Bio-Environmental Engineering HND Fulltime",
+        },
+        { code: "ACCNFT", title: "Accounting ND Fulltime" },
+        { code: "ACCNPT", title: "Accounting ND Parttime" },
+        { code: "ACCHFT", title: "Accounting HND Fulltime" },
+        { code: "ACCHPT", title: "Accounting HND Parttime" },
+        { code: "CEGNFT", title: "Computer Engineering ND Fulltime" },
+        { code: "CEGHFT", title: "Computer Engineering HND Fulltime" },
+        {
+          code: "EEENFT",
+          title: "Electrical/Electronics Engineering ND Fulltime",
+        },
+        {
+          code: "EEEHFT",
+          title: "Electrical/Electronics Engineering HND Fulltime",
+        },
+        { code: "QUSNFT", title: "Quantity Surveying ND Fulltime" },
+        { code: "QUSNPT", title: "Quantity Surveying ND Parttime" },
+        { code: "QUSHFT", title: "Quantity Surveying HND Fulltime" },
+        { code: "QUSHPT", title: "Quantity Surveying HND Parttime" },
       ],
       selectedYear: 0,
-      selectedProg: '',
+      selectedProg: "",
       displayTop: true,
-      isLoading: false
-    }
+      isLoading: false,
+    };
   },
   methods: {
     populate() {
-      let startYear = 2002, endYear = new Date().getFullYear()
+      let startYear = 2002,
+        endYear = new Date().getFullYear();
       for (let index = startYear; index < endYear + 1; index++) {
-        this.sessions.push({ id: index })
+        this.sessions.push({ id: index });
       }
     },
     addCourseDialog() {
@@ -125,9 +140,9 @@ export default {
         props: { repos: this.repos, selectedYear: this.selectedYear },
         hasModalCard: true,
         events: {
-          'store-progs': () => this.storeProgs()
-        }
-      })
+          "store-progs": () => this.storeProgs(),
+        },
+      });
     },
     addGradeDialog() {
       this.$buefy.modal.open({
@@ -136,45 +151,50 @@ export default {
         props: { gradeList: this.gradeList, selectedYear: this.selectedYear },
         hasModalCard: true,
         events: {
-          'store-gradeslist': () => this.storeGradesList()
-        }
-      })
+          "store-gradeslist": () => this.storeGradesList(),
+        },
+      });
     },
     async initDb() {
       if (this.selectedYear && this.selectedProg) {
-        this.isLoading = true
-        await getGrades()
-          .then(data => this.gradeList = data)
+        this.isLoading = true;
+        await getGrades().then((data) => (this.gradeList = data));
 
-        await getProgs(this.selectedProg.toLowerCase())
-          .then(data => this.repos = data)
+        await getProgs(this.selectedProg.toLowerCase()).then(
+          (data) => (this.repos = data)
+        );
 
-        if (!('courseList' in this.repos && this.repos['courseList'][this.selectedYear])) {
-          this.repos['courseList'] = {
-            [this.selectedYear]: { data: [] }
-          }
+        if (
+          !(
+            "courseList" in this.repos &&
+            this.repos["courseList"][this.selectedYear]
+          )
+        ) {
+          this.repos["courseList"] = {
+            [this.selectedYear]: { data: [] },
+          };
 
           if (!(this.selectedYear in this.gradeList)) {
-            this.gradeList[this.selectedYear] = { data: [] }
+            this.gradeList[this.selectedYear] = { data: [] };
           }
         }
-        this.isLoading = false
+        this.isLoading = false;
       }
     },
     storeProgs() {
-      postProgs(this.selectedProg.toLowerCase(), this.repos)
+      postProgs(this.selectedProg.toLowerCase(), this.repos);
     },
     storeGradesList() {
-      if (this.gradeList) postGrades(this.gradeList)
+      if (this.gradeList) postGrades(this.gradeList);
     },
     showTop(val) {
-      this.displayTop = val
-    }
+      this.displayTop = val;
+    },
   },
   created() {
-    this.populate()
-  }
-}
+    this.populate();
+  },
+};
 </script>
 
 <style>
