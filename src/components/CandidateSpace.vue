@@ -51,7 +51,7 @@
             <b-field>
               <b-button
                 type="is-primary is-rounded"
-                icon-left="arrow-collapse-right"
+                icon-right="arrow-collapse-right"
                 @click="addToTable"
                 >Add to Table</b-button
               >
