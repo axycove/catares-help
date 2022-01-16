@@ -1,6 +1,6 @@
 # catares-help
 
->This is a side-project I did for fun to help as an ad-hoc grading system. It allows for customized entries of grades, courses and then computes to display the academic stand of the active candidate; listing grade point summaries and carry overs, if any.
+>This is a side-project I did for fun to assist as an ad-hoc grading system. It allows for customized entries of grades, courses and then computes to display the academic stand of the active candidate; listing grade point summaries and carry overs, if any. Computations are reactive.
 
 ## Tech stack
 - Backend: Node.js server
