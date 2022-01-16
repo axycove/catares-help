@@ -22,7 +22,7 @@ Live demo: http://ec2-3-140-49-1.us-east-2.compute.amazonaws.com/
 
 ![rQQJjb.png](https://i1.lensdump.com/i/rQQJjb.png)
 
-#### *Candidate Entry/Selection*
+#### *Computation Space for Active Candidate*
 
 ![rQQ6fT.png](https://i.lensdump.com/i/rQQ6fT.png)
 
