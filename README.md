@@ -6,9 +6,7 @@ Live demo: http://ec2-3-140-49-1.us-east-2.compute.amazonaws.com/
 
 ## Screenshots
 
-<dl>
-  <dt>Main Page</dt>
-</dl>
+#### *Start Page (Mainboard)*
 
 ![rQQkKz.png](https://i3.lensdump.com/i/rQQkKz.png)
 
