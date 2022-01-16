@@ -14,7 +14,7 @@ Live demo: http://ec2-3-140-49-1.us-east-2.compute.amazonaws.com/
 
 ![rQQEt5.png](https://i2.lensdump.com/i/rQQEt5.png)
 
-#### *Grandes Entry*
+#### *Grades Entry*
 
 ![rQQQq7.png](https://i2.lensdump.com/i/rQQQq7.png)
 
