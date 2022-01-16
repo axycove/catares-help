@@ -6,11 +6,9 @@ Live demo: http://ec2-3-140-49-1.us-east-2.compute.amazonaws.com/
 
 ## Screenshots
 
-#### Main Page
-
 <dl>
   <dt>Main Page</dt>
-  <dd>![rQQkKz.png](https://i3.lensdump.com/i/rQQkKz.png)</dd>
+  ![rQQkKz.png](https://i3.lensdump.com/i/rQQkKz.png)
 </dl>
 
 #### Courses Entry Modal Form
