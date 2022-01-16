@@ -9,24 +9,31 @@ Live demo: http://ec2-3-140-49-1.us-east-2.compute.amazonaws.com/
 <dl>
   <dt>Main Page</dt>
 </dl>
+
 ![rQQkKz.png](https://i3.lensdump.com/i/rQQkKz.png)
 
 <dl>
   <dt>Courses Entry</dt>
 </dl>
+
 ![rQQEt5.png](https://i2.lensdump.com/i/rQQEt5.png)
 
 <dl>
   <dt>Grandes Entry</dt>
 </dl>
+
 ![rQQQq7.png](https://i2.lensdump.com/i/rQQQq7.png)
 
 <dl>
   <dt>Candidates Entry/Selection</dt>
 </dl>
+
 ![rQQJjb.png](https://i1.lensdump.com/i/rQQJjb.png)
 
-#### Computation Space
+<dl>
+  <dt>Candidates Entry/Selection</dt>
+</dl>
+
 ![rQQ6fT.png](https://i.lensdump.com/i/rQQ6fT.png)
 
 ## Tech stack
