@@ -8,16 +8,22 @@ Live demo: http://ec2-3-140-49-1.us-east-2.compute.amazonaws.com/
 
 <dl>
   <dt>Main Page</dt>
-  ![rQQkKz.png](https://i3.lensdump.com/i/rQQkKz.png)
 </dl>
+![rQQkKz.png](https://i3.lensdump.com/i/rQQkKz.png)
 
-#### Courses Entry Modal Form
+<dl>
+  <dt>Courses Entry</dt>
+</dl>
 ![rQQEt5.png](https://i2.lensdump.com/i/rQQEt5.png)
 
-#### Grades Entry Modal Form
+<dl>
+  <dt>Grandes Entry</dt>
+</dl>
 ![rQQQq7.png](https://i2.lensdump.com/i/rQQQq7.png)
 
-#### Candidates Entry Modal Form
+<dl>
+  <dt>Candidates Entry/Selection</dt>
+</dl>
 ![rQQJjb.png](https://i1.lensdump.com/i/rQQJjb.png)
 
 #### Computation Space
