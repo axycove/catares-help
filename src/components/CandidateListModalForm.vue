@@ -25,7 +25,7 @@
               props.row.datasets
             }}</b-table-column>
             <b-table-column>
-              <template v-slot:default="{ row }">
+              <template v-slot:default="{row}">
                 <b-field>
                   <b-button
                     type="is-danger is-rounded"
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { deleteCandidate, getCandidates } from '../services/api';
+import {deleteCandidate, getCandidates} from '../services/api'
 
 export default {
   props: {
@@ -86,19 +86,19 @@ export default {
       candidate: '',
       candidateList: [],
       isLoading: false,
-    };
+    }
   },
   mounted() {
-    this.isLoading = true;
-    getCandidates(this.selectedProg).then((data) => {
-      this.isLoading = false;
-      this.candidateList = data;
-    });
+    this.isLoading = true
+    getCandidates(this.selectedProg).then(data => {
+      this.isLoading = false
+      this.candidateList = data
+    })
   },
   methods: {
     async initSpace(val) {
-      this.$emit('init-space', val);
-      this.$parent.close();
+      this.$emit('init-space', val)
+      this.$parent.close()
     },
     deleteRow(row) {
       this.$buefy.dialog.confirm({
@@ -108,12 +108,12 @@ export default {
         type: 'is-danger',
         hasIcon: true,
         onConfirm: async () => {
-          await deleteCandidate(row.name).then((data) => (this.candidateList = data));
+          await deleteCandidate(row.name).then(data => (this.candidateList = data))
 
-          this.$buefy.toast.open('Candidate deleted!');
+          this.$buefy.toast.open('Candidate deleted!')
         },
-      });
+      })
     },
   },
-};
+}
 </script>

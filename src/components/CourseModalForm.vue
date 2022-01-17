@@ -77,9 +77,9 @@ export default {
   computed: {
     courseInfo() {
       if (this.course && 'code' in this.course) {
-        return `${this.course.code.trim()} : ${this.course.title.trim()}`;
+        return `${this.course.code.trim()} : ${this.course.title.trim()}`
       }
-      return '';
+      return ''
     },
   },
   data() {
@@ -118,49 +118,49 @@ export default {
           label: 'Credits',
         },
       ],
-    };
+    }
   },
   methods: {
     saveCourse() {
-      let exists = false;
+      let exists = false
 
       if (this.course.code === '' || this.course.title === '' || this.course.credits === '') {
-        this.$refs.codeTextbox.focus();
-        return;
+        this.$refs.codeTextbox.focus()
+        return
       }
 
       if (this.repos.courseList[this.selectedYear].data.length) {
-        this.repos.courseList[this.selectedYear].data.every((element) => {
+        this.repos.courseList[this.selectedYear].data.every(element => {
           if (element.code === this.course.code) {
-            exists = true;
-            return false;
+            exists = true
+            return false
           }
-        });
+        })
       }
 
       if (!exists) {
-        this.course.id = this.repos.courseList[this.selectedYear].data.length + 1;
-        this.repos.courseList[this.selectedYear].data.push(this.course);
+        this.course.id = this.repos.courseList[this.selectedYear].data.length + 1
+        this.repos.courseList[this.selectedYear].data.push(this.course)
       }
 
       this.course = {
         code: '',
         title: '',
         credits: 0,
-      };
-      this.$refs.codeTextbox.focus();
+      }
+      this.$refs.codeTextbox.focus()
 
-      this.$emit('store-progs');
+      this.$emit('store-progs')
     },
     deleteRows() {
-      const data = this.repos.courseList[this.selectedYear].data;
-      this.checkedRows.forEach((row) => {
-        data.splice(data.indexOf(row), 1);
-      });
-      this.checkedRows = [];
+      const data = this.repos.courseList[this.selectedYear].data
+      this.checkedRows.forEach(row => {
+        data.splice(data.indexOf(row), 1)
+      })
+      this.checkedRows = []
 
-      this.$emit('store-progs');
+      this.$emit('store-progs')
     },
   },
-};
+}
 </script>
