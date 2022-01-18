@@ -148,10 +148,7 @@ export default {
         this.repos = await getProgs(this.selectedProg.toLowerCase())
         
         if (!this.repos?.courseList?.[this.selectedYear]) {
-          this.repos['courseList'] = {
-            [this.selectedYear]: { data: [] },
-          }
-
+          this.repos['courseList'][this.selectedYear] =  { data: [] }
           if (!this.gradeList?.[this.selectedYear]) {
             this.gradeList[this.selectedYear] = { data: [] }
           }
