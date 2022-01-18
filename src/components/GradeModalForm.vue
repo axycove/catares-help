@@ -19,7 +19,7 @@
       <b-tabs>
         <b-tab-item label="Table">
           <b-table
-            v-if="gradeList[selectedYear] != undefined"
+            v-if="Boolean(gradeList[selectedYear])"
             :data="gradeList[selectedYear].data"
             :columns="gradeColumns"
             focusable
@@ -116,7 +116,7 @@ export default {
         return
       }
 
-      if (this.gradeList[this.selectedYear] && this.gradeList[this.selectedYear].data.length) {
+      if (this.gradeList?.[this.selectedYear].data.length) {
         this.gradeList[this.selectedYear].data.every(element => {
           if (element.letter === this.grade.letter) {
             exists = true

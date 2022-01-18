@@ -19,7 +19,7 @@
       <b-tabs>
         <b-tab-item label="Table">
           <b-table
-            v-if="repos.courseList[selectedYear] != undefined"
+            v-if="Boolean(repos.courseList[selectedYear])"
             :data="repos.courseList[selectedYear].data"
             :columns="courseColumns"
             focusable
@@ -76,7 +76,7 @@ export default {
   },
   computed: {
     courseInfo() {
-      if (this.course && 'code' in this.course) {
+      if (this.course?.code) {
         return `${this.course.code.trim()} : ${this.course.title.trim()}`
       }
       return ''

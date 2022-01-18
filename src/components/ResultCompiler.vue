@@ -63,7 +63,7 @@
 import CourseModalForm from './CourseModalForm'
 import GradeModalForm from './GradeModalForm'
 import CandidateSpace from './CandidateSpace'
-import {getGrades, postGrades, postProgs, getProgs} from '../services/api'
+import { getGrades, postGrades, postProgs, getProgs } from '../services/api'
 
 export default {
   components: {
@@ -85,12 +85,12 @@ export default {
           code: 'ABEHFT',
           title: 'Agric/Bio-Environmental Engineering HND Fulltime',
         },
-        {code: 'ACCNFT', title: 'Accounting ND Fulltime'},
-        {code: 'ACCNPT', title: 'Accounting ND Parttime'},
-        {code: 'ACCHFT', title: 'Accounting HND Fulltime'},
-        {code: 'ACCHPT', title: 'Accounting HND Parttime'},
-        {code: 'CEGNFT', title: 'Computer Engineering ND Fulltime'},
-        {code: 'CEGHFT', title: 'Computer Engineering HND Fulltime'},
+        { code: 'ACCNFT', title: 'Accounting ND Fulltime' },
+        { code: 'ACCNPT', title: 'Accounting ND Parttime' },
+        { code: 'ACCHFT', title: 'Accounting HND Fulltime' },
+        { code: 'ACCHPT', title: 'Accounting HND Parttime' },
+        { code: 'CEGNFT', title: 'Computer Engineering ND Fulltime' },
+        { code: 'CEGHFT', title: 'Computer Engineering HND Fulltime' },
         {
           code: 'EEENFT',
           title: 'Electrical/Electronics Engineering ND Fulltime',
@@ -99,10 +99,10 @@ export default {
           code: 'EEEHFT',
           title: 'Electrical/Electronics Engineering HND Fulltime',
         },
-        {code: 'QUSNFT', title: 'Quantity Surveying ND Fulltime'},
-        {code: 'QUSNPT', title: 'Quantity Surveying ND Parttime'},
-        {code: 'QUSHFT', title: 'Quantity Surveying HND Fulltime'},
-        {code: 'QUSHPT', title: 'Quantity Surveying HND Parttime'},
+        { code: 'QUSNFT', title: 'Quantity Surveying ND Fulltime' },
+        { code: 'QUSNPT', title: 'Quantity Surveying ND Parttime' },
+        { code: 'QUSHFT', title: 'Quantity Surveying HND Fulltime' },
+        { code: 'QUSHPT', title: 'Quantity Surveying HND Parttime' },
       ],
       selectedYear: 0,
       selectedProg: '',
@@ -115,14 +115,14 @@ export default {
       let startYear = 2002,
         endYear = new Date().getFullYear()
       for (let index = startYear; index < endYear + 1; index++) {
-        this.sessions.push({id: index})
+        this.sessions.push({ id: index })
       }
     },
     addCourseDialog() {
       this.$buefy.modal.open({
         parent: this,
         component: CourseModalForm,
-        props: {repos: this.repos, selectedYear: this.selectedYear},
+        props: { repos: this.repos, selectedYear: this.selectedYear },
         hasModalCard: true,
         events: {
           'store-progs': () => this.storeProgs(),
@@ -133,7 +133,7 @@ export default {
       this.$buefy.modal.open({
         parent: this,
         component: GradeModalForm,
-        props: {gradeList: this.gradeList, selectedYear: this.selectedYear},
+        props: { gradeList: this.gradeList, selectedYear: this.selectedYear },
         hasModalCard: true,
         events: {
           'store-gradeslist': () => this.storeGradesList(),
@@ -143,17 +143,17 @@ export default {
     async initDb() {
       if (this.selectedYear && this.selectedProg) {
         this.isLoading = true
-        await getGrades().then(data => (this.gradeList = data))
 
-        await getProgs(this.selectedProg.toLowerCase()).then(data => (this.repos = data))
-
-        if (!('courseList' in this.repos && this.repos['courseList'][this.selectedYear])) {
+        this.gradeList = await getGrades()
+        this.repos = await getProgs(this.selectedProg.toLowerCase())
+        
+        if (!this.repos?.courseList?.[this.selectedYear]) {
           this.repos['courseList'] = {
-            [this.selectedYear]: {data: []},
+            [this.selectedYear]: { data: [] },
           }
 
-          if (!(this.selectedYear in this.gradeList)) {
-            this.gradeList[this.selectedYear] = {data: []}
+          if (!this.gradeList?.[this.selectedYear]) {
+            this.gradeList[this.selectedYear] = { data: [] }
           }
         }
         this.isLoading = false

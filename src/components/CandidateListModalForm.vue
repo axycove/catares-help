@@ -25,7 +25,7 @@
               props.row.datasets
             }}</b-table-column>
             <b-table-column>
-              <template v-slot:default="{row}">
+              <template v-slot:default="{ row }">
                 <b-field>
                   <b-button
                     type="is-danger is-rounded"
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import {deleteCandidate, getCandidates} from '../services/api'
+import { deleteCandidate, getCandidates } from '../services/api'
 
 export default {
   props: {
@@ -88,12 +88,10 @@ export default {
       isLoading: false,
     }
   },
-  mounted() {
+  async mounted() {
     this.isLoading = true
-    getCandidates(this.selectedProg).then(data => {
-      this.isLoading = false
-      this.candidateList = data
-    })
+    this.candidateList = await getCandidates(this.selectedProg)
+    this.isLoading = false
   },
   methods: {
     async initSpace(val) {
@@ -108,8 +106,7 @@ export default {
         type: 'is-danger',
         hasIcon: true,
         onConfirm: async () => {
-          await deleteCandidate(row.name).then(data => (this.candidateList = data))
-
+          this.candidateList = await deleteCandidate(row.name)
           this.$buefy.toast.open('Candidate deleted!')
         },
       })

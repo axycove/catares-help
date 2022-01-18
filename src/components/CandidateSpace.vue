@@ -62,9 +62,7 @@
             >
               <option
                 :value="option.letter"
-                v-for="option in gradeList[
-                  bypassGradeYear ? bypassGradeYear : dataset.split('_')[0]
-                ].data"
+                v-for="option in gradeList[bypassGradeYear || dataset.split('_')[0]].data"
                 :key="option.id"
               >
                 {{ option.letter }}
@@ -107,13 +105,13 @@
                 ><b>{{ props.row.credits }}</b></b-table-column
               >
               <b-table-column centered field="points" label="Points" v-slot="props"
-                ><b>{{ props.row.points }}</b></b-table-column
+                ><b>{{ fmtNum(props.row.points) }}</b></b-table-column
               >
               <b-table-column centered field="gradePoints" label="Grade Points" v-slot="props"
                 ><b>{{ fmtNum(props.row.gradePoints) }}</b></b-table-column
               >
               <b-table-column centered>
-                <template v-slot:default="{row}">
+                <template v-slot:default="{ row }">
                   <b
                     >{{ `GPA: ${row.gradePoints > 0 ? fmtNum(row.gradePoints / row.credits) : 0}` }}
                   </b>
@@ -135,7 +133,7 @@
                     {{ item.credits }}
                   </td>
                   <td class="has-text-centered">
-                    {{ item.points }}
+                    {{ fmtNum(item.points) }}
                   </td>
                   <td class="has-text-centered">
                     {{ fmtNum(item.gradePoints) }}
@@ -197,7 +195,7 @@
 
 <script>
 import CandidateListModalForm from './CandidateListModalForm'
-import {getResults, getProgs, postResults} from '../services/api'
+import { getResults, getProgs, postResults } from '../services/api'
 
 export default {
   computed: {
@@ -210,14 +208,12 @@ export default {
         datasetGradePoints,
         datasetPoints,
         grade = ''
-      const gradeList = this.gradeList[
-        this.bypassGradeYear ? this.bypassGradeYear : this.dataset.split('_')[0]
-      ]
+      const gradeList = this.gradeList[this.bypassGradeYear || this.dataset.split('_')[0]]
       this.data.forEach(dataset => {
         datasetGradePoints = datasetPoints = 0
         dataset.items.forEach(result => {
           grade = gradeList.data.find(item => item.letter == result.grade)
-          result.points = grade === undefined ? result.points : grade.points
+          result.points = grade?.points ?? result.points
           datasetPoints += result.points
           result.gradePoints = result.points * result.credits
           datasetGradePoints += result.gradePoints
@@ -307,9 +303,8 @@ export default {
   },
   methods: {
     async initDb() {
-      let repos = null
-      await getProgs(this.selectedProg.toLowerCase()).then(data => (repos = data))
-      const parsedList = repos ? repos.courseList : null
+      const repos = await getProgs(this.selectedProg.toLowerCase())
+      const parsedList = repos?.courseList
       if (parsedList) this.courseList = parsedList[this.selectedYear].data
 
       // Populate sessions, datasets
@@ -325,7 +320,7 @@ export default {
     addToTable() {
       if (!this.dataset) return
 
-      let group = this.data.find(({description}) => description === this.dataset)
+      let group = this.data.find(({ description }) => description === this.dataset)
 
       if (group === undefined) {
         group = {}
@@ -359,9 +354,7 @@ export default {
       this.tableUpdated = true
     },
     async changeGrade(obj, upwards = true) {
-      const gradeList = this.gradeList[
-        this.bypassGradeYear ? this.bypassGradeYear : this.dataset.split('_')[0]
-      ]
+      const gradeList = this.gradeList[this.bypassGradeYear || this.dataset.split('_')[0]]
       if (gradeList) {
         const grade = gradeList.data.find(item => item.letter === obj.grade)
         let position = gradeList.data.indexOf(grade)
@@ -398,7 +391,7 @@ export default {
       this.$buefy.modal.open({
         parent: this,
         component: CandidateListModalForm,
-        props: {selectedProg: this.selectedProg},
+        props: { selectedProg: this.selectedProg },
         hasModalCard: true,
         events: {
           'init-space': val => {
@@ -410,8 +403,7 @@ export default {
     async initSpace(cand) {
       this.initDb()
       this.candidate = cand
-      let results = null
-      await getResults(cand).then(data => (results = data))
+      let results = await getResults(cand)
       if (results && cand) {
         this.data = results ? results : []
         this.sortDatasets()

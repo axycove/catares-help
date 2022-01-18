@@ -21,7 +21,7 @@ app.post('/api/grades', function(req, res) {
   fs.writeFile(
     path.resolve(__dirname, './data/catares-grades.json'),
     JSON.stringify(req.body),
-    function(err, data) {
+    function(err) {
       if (err) {
         res.send('')
       }
@@ -104,7 +104,7 @@ app.post('/api/progs/:code', async function(req, res) {
     fs.writeFile(
       path.resolve(__dirname, `./data/catares-${req.params.code}.json`),
       JSON.stringify(req.body),
-      function(err, data) {
+      function(err) {
         if (err) {
           res.send('')
         }
