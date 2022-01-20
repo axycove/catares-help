@@ -1,12 +1,10 @@
 const fs = require('fs')
 const path = require('path')
+require('dotenv').config()
 
 module.exports = {
   options: {
-    origin:
-      process.env.NODE_ENV === 'production'
-        ? 'http://ec2-3-140-49-1.us-east-2.compute.amazonaws.com'
-        : 'http://localhost:8081',
+    origin: process.env.NODE_ENV === 'production' ? process.env.URL_REMOTE : process.env.URL_LOCAL,
     optionSuccessStatus: 200,
   },
 

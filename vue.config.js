@@ -16,8 +16,8 @@ module.exports = {
         // allow access to process.env from within the vue app
         'process.env': {
           API_URL: process.env.NODE_ENV === 'production'
-            ? JSON.stringify('http://ec2-3-140-49-1.us-east-2.compute.amazonaws.com:3000/api')
-            : JSON.stringify('http://localhost:3000/api')
+            ? JSON.stringify(process.env.API_URL_REMOTE)
+            : JSON.stringify(process.env.API_URL_LOCAL)
         }
       })
     ]

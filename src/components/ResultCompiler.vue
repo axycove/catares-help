@@ -9,7 +9,7 @@
         <p class="title app-title">Catasys Results Helper :: <i>catares-help</i></p>
         <hr class="hero-divider has-background-grey-light" />
         <p class="subtitle has-text-grey-lighter is-size-6 is-italic">
-          An ad-hoc results compilation system! Made with &#128151; by 0x4b656e. :)
+          An ad-hoc results compilation system! Made with &#128151; by 0x417879636F7665. :)
         </p>
       </div>
     </section>

@@ -2,13 +2,11 @@
 
 >This is a side-project I did for fun to assist as an ad-hoc grading system. It allows for customized entries of grades, courses and then computes to display the academic stand of the active candidate; listing grade point summaries and carry overs, if any. Computations are reactive.
 
-Live demo: http://ec2-3-140-49-1.us-east-2.compute.amazonaws.com/
-
 ## Screenshots
 
 #### *Start Page (Mainboard)*
 
-![rQQkKz.png](https://i3.lensdump.com/i/rQQkKz.png)
+![r9hGvi.png](https://i.lensdump.com/i/r9hGvi.png)
 
 #### *Course Entry/Listing*
 
@@ -20,13 +18,24 @@ Live demo: http://ec2-3-140-49-1.us-east-2.compute.amazonaws.com/
 
 #### *Candidate Entry/Selection*
 
-![rQQJjb.png](https://i1.lensdump.com/i/rQQJjb.png)
+![r9h5Vm.png](https://i3.lensdump.com/i/r9h5Vm.png)
 
 #### *Computation Space for Active Candidate*
 
-![rQQ6fT.png](https://i.lensdump.com/i/rQQ6fT.png)
+![r9hyAP.png](https://i2.lensdump.com/i/r9hyAP.png)
 
 ## Tech stack
 - Backend: Node.js server
 - Frontend: Vue.js, Webpack.js, JavaScript ES6, Buefy (Styling)
 - Hosting: Amazon AWS EC2 instance.
+
+## Install Packages & Run
+
+```bash
+npm install
+node api/server.js
+npm run serve
+```
+
+
+
