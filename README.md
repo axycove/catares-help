@@ -24,7 +24,7 @@
 
 ![r9hyAP.png](https://i2.lensdump.com/i/r9hyAP.png)
 
-## Tech stack
+## Languages/Toolset
 - Backend: Node.js server
 - Frontend: Vue.js, Webpack.js, JavaScript ES6, Buefy (Styling)
 - Hosting: Amazon AWS EC2 instance.
